@@ -71,6 +71,10 @@ void main() {
     expect(e.kcal, closeTo(e.grams * 162 / 100, 0.01));
     expect(e.fat, greaterThan(0));
     expect(e.icon, 'milk');
+    Product p(String n) => s.builtInProducts.firstWhere((x) => x.name == n);
+    expect(p('Apple').icon, 'snack'); // the apple picture
+    expect(p('Apple juice').icon, 'drinks');
+    expect(p('Potato').icon, 'salad');
     expect(s.eatenIn(Meal.lunch), closeTo(before + e.kcal, 0.01));
     expect(s.dishes.length, dishes, reason: 'products are not saved as dishes');
   });

@@ -258,7 +258,23 @@ class Product {
         ['milk', 'kefir', 'yogurt', 'cream', 'cheese', 'mascarpone', 'butter'],
         'milk'
       ),
-      (['chocolate', 'cookie', 'jam', 'honey', 'ice cream'], 'snack'),
+      (['chocolate', 'cookie', 'jam', 'honey', 'ice cream'], 'cookie'),
+      // The "snack" picture is an apple.
+      (
+        [
+          'apple',
+          'pear',
+          'peach',
+          'orange',
+          'banana',
+          'kiwi',
+          'lemon',
+          'cherr',
+          'berr',
+          'raisin'
+        ],
+        'snack'
+      ),
     ]) {
       if (words.any(n.contains)) return icon;
     }

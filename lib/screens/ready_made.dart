@@ -106,6 +106,24 @@ class _ReadyMadeScreenState extends State<ReadyMadeScreen>
                     ? 'Name — e.g. Café cappuccino'
                     : 'Name — e.g. Bakery cupcake')),
           ),
+          const SizedBox(height: 14),
+          Text('Icon', style: PC.body(14, color: PC.textSoft)),
+          const SizedBox(height: 8),
+          // One scrolling row, like in Homemade — the fields stay in view.
+          SizedBox(
+            height: 64,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                IconPicker(
+                  icons: iconChoices,
+                  selected: _icon,
+                  size: 40,
+                  onSelect: (i) => setState(() => _icon = i),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 16),
           Text('How is it counted?', style: PC.body(14, color: PC.textSoft)),
           const SizedBox(height: 8),
@@ -138,14 +156,6 @@ class _ReadyMadeScreenState extends State<ReadyMadeScreen>
               style: PC.body(12, color: PC.textSoft)),
           const SizedBox(height: 6),
           MacroFields(protein: _protein, fat: _fat, carbs: _carbs),
-          const SizedBox(height: 18),
-          Text('Icon', style: PC.body(14, color: PC.textSoft)),
-          const SizedBox(height: 8),
-          IconPicker(
-            icons: iconChoices,
-            selected: _icon,
-            onSelect: (i) => setState(() => _icon = i),
-          ),
         ],
       ),
     );
