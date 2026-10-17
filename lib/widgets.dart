@@ -173,12 +173,11 @@ class OutlineButtonPC extends StatelessWidget {
           onPressed: onPressed,
           icon: Icon(icon ?? Icons.add, color: PC.gold, size: 20),
           // Shrinks instead of overflowing: three in a row, long German words.
-          label: Flexible(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(label,
-                  style: PC.body(15, color: PC.gold, weight: FontWeight.w600)),
-            ),
+          // (Flutter already puts the label in a Flexible.)
+          label: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(label,
+                style: PC.body(15, color: PC.gold, weight: FontWeight.w600)),
           ),
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 10),
