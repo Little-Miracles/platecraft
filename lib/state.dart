@@ -105,7 +105,10 @@ class AppState extends ChangeNotifier {
   void addOwnProduct(Product p) {
     ownProducts
         .removeWhere((o) => o.name.toLowerCase() == p.name.toLowerCase());
-    ownProducts.insert(0, Product(p.name, p.kcalPer100, own: true));
+    ownProducts.insert(
+        0,
+        Product(p.name, p.kcalPer100,
+            protein: p.protein, fat: p.fat, carbs: p.carbs, own: true));
     _save('ownProducts', ownProducts.map((o) => o.toJson()).toList());
   }
 
@@ -124,6 +127,10 @@ class AppState extends ChangeNotifier {
 
   double eatenIn(Meal m) => entriesFor(m).fold(0, (s, e) => s + e.kcal);
 
+  double get proteinDay => dayEntries.fold(0, (s, e) => s + e.protein);
+  double get fatDay => dayEntries.fold(0, (s, e) => s + e.fat);
+  double get carbsDay => dayEntries.fold(0, (s, e) => s + e.carbs);
+
   Entry addEntry(Meal meal, Dish dish, double grams) {
     final e = Entry(
       id: newId(),
@@ -133,6 +140,9 @@ class AppState extends ChangeNotifier {
       icon: dish.icon,
       grams: grams,
       kcal: dish.kcalFor(grams),
+      protein: dish.proteinFor(grams),
+      fat: dish.fatFor(grams),
+      carbs: dish.carbsFor(grams),
       unit: dish.unit,
     );
     entries.add(e);

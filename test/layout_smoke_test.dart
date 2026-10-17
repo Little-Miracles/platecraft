@@ -3,6 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:platecraft/models.dart';
 import 'package:platecraft/screens/day_kitchen.dart';
+import 'package:platecraft/screens/dish_builder.dart';
+import 'package:platecraft/screens/meals.dart';
+import 'package:platecraft/screens/ready_made.dart';
 import 'package:platecraft/screens/start_home.dart';
 import 'package:platecraft/state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +29,10 @@ void main() {
     for (final entry in {
       'home': const HomeScreen(),
       'kitchen': const DayKitchenScreen(),
+      'breakfast': const MealScreen(meal: Meal.breakfast),
+      'saved dishes': const SavedDishesScreen(),
+      'homemade': const DishBuilderScreen(category: Category.soups),
+      'ready-made': const ReadyMadeScreen(category: Category.drinks),
     }.entries) {
       testWidgets('${entry.key} lays out at $size', (tester) async {
         tester.view.physicalSize = size;

@@ -8,37 +8,52 @@ import '../widgets.dart';
 import 'dish_builder.dart';
 import 'ready_made.dart';
 
-/// My Kitchen — the library of your dishes, by section.
-/// Opened from home it's for creating and editing dishes.
-/// Opened from a meal ([meal] set) tapping a dish adds a portion to that meal.
-class KitchenScreen extends StatefulWidget {
-  const KitchenScreen({super.key, this.meal});
+/// Saved dishes — everything you've made once, by section.
+/// Nothing is created here: dishes are made from a meal (➕) and land here
+/// by themselves. Tap one to add a portion to a meal; edit or delete it.
+/// Opened from a meal ([meal] set) the portion goes straight to that meal.
+class SavedDishesScreen extends StatefulWidget {
+  const SavedDishesScreen({super.key, this.meal});
   final Meal? meal;
 
   @override
-  State<KitchenScreen> createState() => _KitchenScreenState();
+  State<SavedDishesScreen> createState() => _SavedDishesScreenState();
 }
 
-class _KitchenScreenState extends State<KitchenScreen> {
+class _SavedDishesScreenState extends State<SavedDishesScreen> {
   late Category _tab =
       widget.meal == Meal.breakfast || widget.meal == Meal.snack
           ? Category.drinks
           : Category.mains;
 
-  bool get _adding => widget.meal != null;
-
-  Future<void> _create(Widget screen) async {
-    final dish = await Navigator.push<Dish>(
-        context, MaterialPageRoute(builder: (_) => screen));
-    if (dish != null && _adding && mounted) {
-      await _addPortion(dish);
-    }
-  }
-
   Future<void> _addPortion(Dish dish) async {
-    final added = await showPortionSheet(context, widget.meal!, dish);
-    if (added == true && mounted) Navigator.pop(context);
+    final meal = widget.meal ?? await _pickMeal();
+    if (meal == null) return;
+    if (!mounted) return;
+    final added = await showPortionSheet(context, meal, dish);
+    if (!mounted) return;
+    if (added == true && widget.meal != null) Navigator.pop(context);
   }
+
+  Future<Meal?> _pickMeal() => showModalBottomSheet<Meal>(
+        context: context,
+        builder: (ctx) => Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Add to which meal?', style: PC.logo(22)),
+              const SizedBox(height: 12),
+              for (final m in Meal.values.where((m) => m != Meal.water))
+                ListTile(
+                  leading: IconOnBlack(m.icon, size: 40),
+                  title: Text(m.label, style: PC.logo(18)),
+                  onTap: () => Navigator.pop(ctx, m),
+                ),
+            ],
+          ),
+        ),
+      );
 
   void _edit(Dish dish) => Navigator.push(
         context,
@@ -49,6 +64,25 @@ class _KitchenScreenState extends State<KitchenScreen> {
         ),
       );
 
+  Future<void> _delete(Dish dish) async {
+    final yes = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Delete "${dish.name}"?', style: PC.title(22)),
+        content: Text('What you already ate stays in your days.',
+            style: PC.body(14, color: PC.textSoft)),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(ctx), child: const Text('Keep')),
+          FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: const Text('Delete')),
+        ],
+      ),
+    );
+    if (yes == true) AppState.instance.deleteDish(dish);
+  }
+
   @override
   Widget build(BuildContext context) {
     final s = AppState.instance;
@@ -57,23 +91,9 @@ class _KitchenScreenState extends State<KitchenScreen> {
       builder: (context, _) {
         final dishes = s.dishesIn(_tab);
         return PCScaffold(
-          title: _adding ? 'Add to ${widget.meal!.label}' : 'My Kitchen',
-          bottom: Row(
-            children: [
-              Expanded(
-                child: OutlineButtonPC('Ready-made',
-                    icon: Icons.shopping_bag_outlined,
-                    onPressed: () => _create(ReadyMadeScreen(category: _tab))),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: OutlineButtonPC('Homemade',
-                    icon: Icons.soup_kitchen_outlined,
-                    onPressed: () =>
-                        _create(DishBuilderScreen(category: _tab))),
-              ),
-            ],
-          ),
+          title: widget.meal == null
+              ? 'Saved dishes'
+              : 'Add to ${widget.meal!.label}',
           body: Column(
             children: [
               SizedBox(
@@ -93,16 +113,17 @@ class _KitchenScreenState extends State<KitchenScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
                         children: [
                           Text(
-                              _adding
-                                  ? 'Tap a dish to add your portion'
-                                  : 'Tap a dish to see or change its recipe',
+                              widget.meal == null
+                                  ? 'Tap a dish to add it to a meal'
+                                  : 'Tap a dish to add your portion',
                               style: PC.body(13, color: PC.textSoft)),
                           const SizedBox(height: 10),
                           for (final d in dishes)
                             _DishCard(
                               dish: d,
-                              onTap: () => _adding ? _addPortion(d) : _edit(d),
+                              onTap: () => _addPortion(d),
                               onEdit: () => _edit(d),
+                              onDelete: () => _delete(d),
                             ),
                         ],
                       ),
@@ -133,7 +154,7 @@ class _KitchenScreenState extends State<KitchenScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon3D(c.icon, size: 34),
+              IconOnBlack(c.icon, size: 40),
               const SizedBox(height: 4),
               Text(c.label.split(' ').first,
                   style: PC.body(12,
@@ -153,14 +174,14 @@ class _KitchenScreenState extends State<KitchenScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GlowIcon(_tab.icon, size: 80),
+            IconOnBlack(_tab.icon, size: 96),
             const SizedBox(height: 12),
-            Text('Your ${_tab.label.toLowerCase()} shelf is empty',
+            Text('Nothing saved in ${_tab.label.toLowerCase()} yet',
                 textAlign: TextAlign.center,
                 style: PC.title(22, color: PC.text)),
             const SizedBox(height: 8),
             Text(
-              'Make it once with "Homemade" — next time just weigh your plate.',
+              'Make a dish from Breakfast, Lunch, Dinner or Snack — it is saved here by itself.',
               textAlign: TextAlign.center,
               style: PC.body(14, color: PC.textSoft),
             ),
@@ -171,10 +192,14 @@ class _KitchenScreenState extends State<KitchenScreen> {
 
 class _DishCard extends StatelessWidget {
   const _DishCard(
-      {required this.dish, required this.onTap, required this.onEdit});
+      {required this.dish,
+      required this.onTap,
+      required this.onEdit,
+      required this.onDelete});
   final Dish dish;
   final VoidCallback onTap;
   final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +215,7 @@ class _DishCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(12, 10, 4, 10),
             child: Row(
               children: [
-                Icon3D(dish.icon, size: 52),
+                IconOnBlack(dish.icon, size: 56),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -219,16 +244,17 @@ class _DishCard extends StatelessWidget {
                         style: PC.body(11, color: PC.textSoft)),
                   ],
                 ),
-                PopupMenuButton<String>(
-                  icon: const Icon(Icons.more_vert, color: PC.textSoft),
-                  color: PC.emerald,
-                  onSelected: (v) => v == 'edit'
-                      ? onEdit()
-                      : AppState.instance.deleteDish(dish),
-                  itemBuilder: (_) => const [
-                    PopupMenuItem(value: 'edit', child: Text('Edit')),
-                    PopupMenuItem(value: 'delete', child: Text('Delete')),
-                  ],
+                IconButton(
+                  tooltip: 'Edit',
+                  icon: const Icon(Icons.edit_outlined,
+                      size: 20, color: PC.textSoft),
+                  onPressed: onEdit,
+                ),
+                IconButton(
+                  tooltip: 'Delete',
+                  icon: const Icon(Icons.delete_outline,
+                      size: 20, color: PC.textSoft),
+                  onPressed: onDelete,
                 ),
               ],
             ),
@@ -239,10 +265,24 @@ class _DishCard extends StatelessWidget {
   }
 }
 
-/// A meal of the selected day: what was eaten + add from My Kitchen.
+/// A meal of the selected day: what was eaten. ➕ makes a new dish
+/// (homemade or ready-made) — it's saved to Saved dishes and its portion
+/// lands here; a dish made before is picked from Saved dishes.
 class MealScreen extends StatelessWidget {
   const MealScreen({super.key, required this.meal});
   final Meal meal;
+
+  Category get _usual => meal == Meal.breakfast || meal == Meal.snack
+      ? Category.drinks
+      : Category.mains;
+
+  Future<void> _create(BuildContext context, Widget screen) async {
+    final dish = await Navigator.push<Dish>(
+        context, MaterialPageRoute(builder: (_) => screen));
+    if (dish != null && context.mounted) {
+      await showPortionSheet(context, meal, dish, justSaved: true);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -255,25 +295,59 @@ class MealScreen extends StatelessWidget {
           title: s.isToday
               ? meal.label
               : '${meal.label} · ${dayTitle(s.selected)}',
-          bottom: GoldButton('Add from My Kitchen',
-              icon: Icons.add,
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => KitchenScreen(meal: meal)))),
+          bottom: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextButton.icon(
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => SavedDishesScreen(meal: meal))),
+                icon: const Icon(Icons.menu_book_outlined,
+                    color: PC.logoGold, size: 20),
+                label: Text('From Saved dishes',
+                    style: PC.logo(15, color: PC.logoGoldLight)),
+              ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlineButtonPC('Ready-made',
+                        icon: Icons.shopping_bag_outlined,
+                        onPressed: () => _create(
+                            context, ReadyMadeScreen(category: _usual))),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: OutlineButtonPC('Homemade',
+                        icon: Icons.soup_kitchen_outlined,
+                        onPressed: () => _create(
+                            context, DishBuilderScreen(category: _usual))),
+                  ),
+                ],
+              ),
+            ],
+          ),
           body: ListView(
             padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
             children: [
-              Center(child: GlowIcon(meal.icon, size: 72)),
+              Center(child: IconOnBlack(meal.icon, size: 96)),
               const SizedBox(height: 8),
               Center(
                 child: Text('${s.eatenIn(meal).round()} kcal',
                     style: PC.body(30,
                         color: PC.goldLight, weight: FontWeight.w800)),
               ),
+              const SizedBox(height: 6),
+              MacrosRow(
+                protein: items.fold(0, (t, e) => t + e.protein),
+                fat: items.fold(0, (t, e) => t + e.fat),
+                carbs: items.fold(0, (t, e) => t + e.carbs),
+              ),
               const SizedBox(height: 18),
               if (items.isEmpty)
-                Text('Nothing here yet — add something from your kitchen.',
+                Text(
+                    'Nothing here yet — make a dish below, or pick one you saved.',
                     textAlign: TextAlign.center,
                     style: PC.body(14, color: PC.textSoft))
               else
@@ -285,7 +359,7 @@ class MealScreen extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(12, 8, 4, 8),
                       child: Row(
                         children: [
-                          Icon3D(e.icon, size: 36),
+                          IconOnBlack(e.icon, size: 40),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Column(
@@ -319,21 +393,17 @@ class MealScreen extends StatelessWidget {
 }
 
 /// "How much did you have?" → exact kcal → add to the meal.
+/// Starts at a usual portion, so nobody has to weigh.
 /// Returns true when the portion was added.
-Future<bool?> showPortionSheet(BuildContext context, Meal meal, Dish dish) {
+Future<bool?> showPortionSheet(BuildContext context, Meal meal, Dish dish,
+    {bool justSaved = false}) {
   final drink = dish.category == Category.drinks;
-  // A drink is usually the whole cup you made; a serving starts at 1.
-  final initial = dish.byServing
-      ? '1'
-      : drink && dish.finishedWeight != null
-          ? fmt(dish.finishedWeight!)
-          : '';
-  final grams = TextEditingController(text: initial);
+  final grams = TextEditingController(text: fmt(dish.standardPortion));
   final label = dish.byServing
       ? 'How many servings?'
       : drink
-          ? 'How much did you drink?'
-          : 'How much did you eat? Weigh your plate';
+          ? 'Your cup'
+          : 'Your portion';
   return showModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
@@ -347,7 +417,7 @@ Future<bool?> showPortionSheet(BuildContext context, Meal meal, Dish dish) {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon3D(dish.icon, size: 72),
+              IconOnBlack(dish.icon, size: 80),
               const SizedBox(height: 8),
               Text(dish.name, style: PC.title(24)),
               Text(
@@ -364,9 +434,23 @@ Future<bool?> showPortionSheet(BuildContext context, Meal meal, Dish dish) {
                 onChanged: (_) => setSheet(() {}),
               ),
               const SizedBox(height: 14),
+              if (!dish.byServing) ...[
+                const SizedBox(height: 4),
+                Text(
+                    'A usual ${drink ? 'cup' : 'portion'} — change it if yours is bigger or smaller.',
+                    style: PC.body(12, color: PC.textSoft)),
+              ],
+              const SizedBox(height: 14),
               Text(kcal == null ? '— kcal' : '${kcal.round()} kcal',
                   style: PC.body(34,
                       color: PC.goldLight, weight: FontWeight.w800)),
+              if (g != null) ...[
+                const SizedBox(height: 6),
+                MacrosRow(
+                    protein: dish.proteinFor(g),
+                    fat: dish.fatFor(g),
+                    carbs: dish.carbsFor(g)),
+              ],
               const SizedBox(height: 16),
               GoldButton('Add to ${meal.label}',
                   icon: Icons.add,
@@ -376,8 +460,9 @@ Future<bool?> showPortionSheet(BuildContext context, Meal meal, Dish dish) {
                           AppState.instance.addEntry(meal, dish, g);
                           Navigator.pop(sheetContext, true);
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  'Added ${kcal!.round()} kcal to ${meal.label}')));
+                              content: Text(justSaved
+                                  ? 'Saved to Saved dishes · ${kcal!.round()} kcal added to ${meal.label}'
+                                  : 'Added ${kcal!.round()} kcal to ${meal.label}')));
                         }),
             ],
           ),

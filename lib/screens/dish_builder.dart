@@ -5,8 +5,8 @@ import '../state.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
-/// Homemade dish: ingredients in grams + the weight of the finished dish
-/// → exact kcal per 100 g. Saved to My Kitchen.
+/// Homemade dish: ingredients in grams + how it's cooked → the finished
+/// weight (estimated, or weighed) → exact kcal per 100 g. Saved to Saved dishes.
 class DishBuilderScreen extends StatefulWidget {
   const DishBuilderScreen({super.key, required this.category, this.existing});
   final Category category;
@@ -18,13 +18,15 @@ class DishBuilderScreen extends StatefulWidget {
 
 class _DishBuilderScreenState extends State<DishBuilderScreen> {
   final _name = TextEditingController();
-  final _finished = TextEditingController();
+
+  /// The cook's own weight of the finished dish — optional.
+  final _weighed = TextEditingController();
   late String _icon;
+  late Category _category = widget.category;
+  late Cooking _cooking = widget.category.usualCooking;
   final List<Ingredient> _items = [];
 
-  /// For drinks the finished volume follows the ingredients until edited.
-  bool _finishedTouched = false;
-  bool get _isDrink => widget.category == Category.drinks;
+  bool get _isDrink => _category == Category.drinks;
 
   @override
   void initState() {
@@ -34,41 +36,55 @@ class _DishBuilderScreenState extends State<DishBuilderScreen> {
     if (d != null) {
       _name.text = d.name;
       _icon = d.icon;
-      _finished.text = d.finishedWeight == null ? '' : fmt(d.finishedWeight!);
-      _items.addAll(d.ingredients.map(
-          (i) => Ingredient(i.name, i.grams, i.kcalPer100, liquid: i.liquid)));
-      _finishedTouched = true;
+      _items.addAll(d.ingredients.map((i) => i.copy()));
+      _cooking = d.cooking ?? _category.usualCooking;
+      // Dishes saved before the estimate existed carry a weighed weight.
+      final estimate = Dish.theoreticalWeight(_items, _cooking);
+      final w = d.finishedWeight;
+      if (w != null && (d.cooking == null || (w - estimate).abs() > 0.5)) {
+        _weighed.text = fmt(w);
+      }
     }
   }
 
-  void _itemsChanged() {
-    if (_isDrink && !_finishedTouched) {
-      _finished.text = _items.isEmpty ? '' : fmt(_rawWeight);
-    }
-  }
+  void _setCategory(Category c) => setState(() {
+        if (_icon == _category.icon) _icon = c.icon;
+        _category = c;
+        _cooking = c.usualCooking;
+      });
 
   Product _productFor(Ingredient it) =>
       AppState.instance.allProducts.firstWhere((p) => p.name == it.name,
-          orElse: () => Product(it.name, it.kcalPer100, liquid: it.liquid));
+          orElse: () => Product(it.name, it.kcalPer100,
+              protein: it.proteinPer100,
+              fat: it.fatPer100,
+              carbs: it.carbsPer100,
+              liquid: it.liquid));
 
   double get _rawWeight => _items.fold(0, (s, i) => s + i.grams);
   double get _totalKcal => _items.fold(0, (s, i) => s + i.kcal);
-  double? get _per100 => Dish.per100(_items, parseNum(_finished.text) ?? 0);
+  double get _estimate => Dish.theoreticalWeight(_items, _cooking);
+  double? get _weighedValue {
+    final w = parseNum(_weighed.text);
+    return w != null && w > 0 ? w : null;
+  }
+
+  /// The weighed weight if the cook entered one, otherwise our estimate.
+  double get _finishedWeight => _weighedValue ?? _estimate;
+  double? _per(double Function(Ingredient) of) =>
+      Dish.per100(_items, _finishedWeight, of);
+  double? get _per100 => _per((i) => i.kcal);
 
   Future<void> _addIngredient() async {
     final product = await showModalBottomSheet<Product>(
       context: context,
       isScrollControlled: true,
-      builder: (_) => _ProductPicker(category: widget.category),
+      builder: (_) => _ProductPicker(category: _category),
     );
     if (product == null || !mounted) return;
     final grams = await _askGrams(product);
     if (grams == null) return;
-    setState(() {
-      _items.add(Ingredient(product.name, grams, product.kcalPer100,
-          liquid: product.liquid));
-      _itemsChanged();
-    });
+    setState(() => _items.add(Ingredient.of(product, grams)));
   }
 
   Future<double?> _askGrams(Product p, {double? initial}) {
@@ -127,14 +143,17 @@ class _DishBuilderScreenState extends State<DishBuilderScreen> {
   }
 
   void _save() {
-    final finished = parseNum(_finished.text)!;
     final dish = Dish(
       id: widget.existing?.id ?? AppState.newId(),
       name: _name.text.trim(),
-      category: widget.category,
+      category: _category,
       icon: _icon,
       kcalPer100: _per100!,
-      finishedWeight: finished,
+      proteinPer100: _per((i) => i.protein)!,
+      fatPer100: _per((i) => i.fat)!,
+      carbsPer100: _per((i) => i.carbs)!,
+      finishedWeight: _finishedWeight,
+      cooking: _cooking,
       ingredients: List.of(_items),
     );
     AppState.instance.saveDish(dish);
@@ -145,18 +164,26 @@ class _DishBuilderScreenState extends State<DishBuilderScreen> {
   Widget build(BuildContext context) {
     final per100 = _per100;
     final canSave = per100 != null && _name.text.trim().isNotEmpty;
+    final unit = _category.unit;
     final iconChoices = [
-      ...widget.category.icons,
-      ...allDishIcons.where((i) => !widget.category.icons.contains(i)),
+      ..._category.icons,
+      ...allDishIcons.where((i) => !_category.icons.contains(i)),
     ];
 
     return PCScaffold(
       title: widget.existing == null ? 'Homemade' : 'Edit dish',
-      bottom: GoldButton('Save to My Kitchen',
+      bottom: GoldButton('Save dish',
           icon: Icons.bookmark_add_outlined, onPressed: canSave ? _save : null),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
         children: [
+          if (widget.existing == null) ...[
+            Text('What are you making?',
+                style: PC.body(14, color: PC.textSoft)),
+            const SizedBox(height: 8),
+            CategoryChoice(selected: _category, onSelect: _setCategory),
+            const SizedBox(height: 16),
+          ],
           TextField(
             controller: _name,
             style: PC.body(17),
@@ -187,8 +214,7 @@ class _DishBuilderScreenState extends State<DishBuilderScreen> {
             children: [
               Expanded(child: Text('Ingredients', style: PC.title(24))),
               if (_items.isNotEmpty)
-                Text(
-                    '${fmt(_rawWeight)} ${widget.category.unit} · ${_totalKcal.round()} kcal',
+                Text('${fmt(_rawWeight)} $unit · ${_totalKcal.round()} kcal',
                     style: PC.body(13, color: PC.textSoft)),
             ],
           ),
@@ -196,26 +222,47 @@ class _DishBuilderScreenState extends State<DishBuilderScreen> {
           for (var i = 0; i < _items.length; i++) _ingredientRow(i),
           OutlineButtonPC('Add ingredient', onPressed: _addIngredient),
           const SizedBox(height: 24),
-          Text(
-              widget.category == Category.drinks
-                  ? 'Measure the finished drink'
-                  : 'Weigh the finished dish',
+          Text(_isDrink ? 'Your drink' : 'How is it cooked?',
               style: PC.title(24)),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
+          if (!_isDrink) ...[
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final c in Cooking.values)
+                  ChoiceChip(
+                    label: Text(c.label),
+                    selected: c == _cooking,
+                    onSelected: (_) => setState(() => _cooking = c),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
           Text(
-            _isDrink
-                ? 'Filled in from your ingredients — change it if your cup holds a different amount.'
-                : 'Water boils off, pasta soaks it up — the pot\'s real weight is what makes this exact.',
+            _items.isEmpty
+                ? 'Add the ingredients — we\'ll estimate the finished weight.'
+                : _isDrink
+                    ? 'Drinks don\'t boil down: 1 ml ≈ 1 g, so your drink is about ${fmt(_estimate)} ml.'
+                    : '${fmt(_rawWeight)} $unit of ingredients, ${_cooking.label.toLowerCase()} — ${_cooking.note}. Your dish weighs about ${fmt(_estimate)} $unit when done.',
             style: PC.body(13, color: PC.textSoft),
           ),
           const SizedBox(height: 10),
           NumberField(
-            controller: _finished,
-            label: widget.category == Category.drinks
-                ? 'Finished volume'
-                : 'Finished weight',
-            suffix: widget.category.unit,
-            onChanged: (_) => setState(() => _finishedTouched = true),
+            controller: _weighed,
+            label: _isDrink
+                ? 'Measured it? Your volume (optional)'
+                : 'Weighed it? Your weight (optional)',
+            suffix: unit,
+            onChanged: (_) => setState(() {}),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            _weighedValue == null
+                ? 'If not, we use our estimate.'
+                : 'Using your weight: ${fmt(_weighedValue!)} $unit.',
+            style: PC.body(12, color: PC.textSoft),
           ),
           const SizedBox(height: 18),
           Container(
@@ -227,10 +274,18 @@ class _DishBuilderScreenState extends State<DishBuilderScreen> {
                     style: PC.body(44,
                         color: PC.goldLight, weight: FontWeight.w800)),
                 Text(
-                    widget.category == Category.drinks
+                    _isDrink
                         ? 'kcal per 100 ml of your drink'
                         : 'kcal per 100 g of your dish',
                     style: PC.body(14, color: PC.textSoft)),
+                if (per100 != null) ...[
+                  const SizedBox(height: 10),
+                  MacrosRow(
+                    protein: _per((i) => i.protein)!,
+                    fat: _per((i) => i.fat)!,
+                    carbs: _per((i) => i.carbs)!,
+                  ),
+                ],
               ],
             ),
           ),
@@ -262,10 +317,7 @@ class _DishBuilderScreenState extends State<DishBuilderScreen> {
               onPressed: () async {
                 final g = await _askGrams(_productFor(it), initial: it.grams);
                 if (g != null) {
-                  setState(() {
-                    it.grams = g;
-                    _itemsChanged();
-                  });
+                  setState(() => it.grams = g);
                 }
               },
               child: Text('${fmt(it.grams)} ${it.unit}',
@@ -279,10 +331,7 @@ class _DishBuilderScreenState extends State<DishBuilderScreen> {
             ),
             IconButton(
               icon: const Icon(Icons.close, size: 18, color: PC.textSoft),
-              onPressed: () => setState(() {
-                _items.removeAt(i);
-                _itemsChanged();
-              }),
+              onPressed: () => setState(() => _items.removeAt(i)),
             ),
           ],
         ),
@@ -306,6 +355,9 @@ class _ProductPickerState extends State<_ProductPicker> {
   Future<void> _addOwn() async {
     final name = TextEditingController(text: _q);
     final kcal = TextEditingController();
+    final protein = TextEditingController();
+    final fat = TextEditingController();
+    final carbs = TextEditingController();
     final p = await showDialog<Product>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -320,6 +372,8 @@ class _ProductPickerState extends State<_ProductPicker> {
             const SizedBox(height: 10),
             NumberField(
                 controller: kcal, label: 'kcal per 100 g (from the package)'),
+            const SizedBox(height: 10),
+            MacroFields(protein: protein, fat: fat, carbs: carbs),
           ],
         ),
         actions: [
@@ -329,7 +383,13 @@ class _ProductPickerState extends State<_ProductPicker> {
             onPressed: () {
               final k = parseNum(kcal.text);
               if (name.text.trim().isEmpty || k == null) return;
-              Navigator.pop(ctx, Product(name.text.trim(), k, own: true));
+              Navigator.pop(
+                  ctx,
+                  Product(name.text.trim(), k,
+                      protein: parseNum(protein.text) ?? 0,
+                      fat: parseNum(fat.text) ?? 0,
+                      carbs: parseNum(carbs.text) ?? 0,
+                      own: true));
             },
             child: const Text('Save'),
           ),

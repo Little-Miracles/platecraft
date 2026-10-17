@@ -48,6 +48,39 @@ enum Category {
 
   /// Drinks are measured in ml (1 ml ≈ 1 g), everything else in grams.
   String get unit => this == Category.drinks ? 'ml' : 'g';
+
+  /// A usual portion, so nobody has to weigh: a cup, a bowl, a plate, a slice.
+  double get standardPortion => switch (this) {
+        Category.drinks => 250,
+        Category.soups => 300,
+        Category.mains => 250,
+        Category.baked => 100,
+      };
+
+  /// How this kind of dish is usually cooked.
+  Cooking get usualCooking => switch (this) {
+        Category.drinks => Cooking.none,
+        Category.soups => Cooking.boiled,
+        Category.mains => Cooking.stewed,
+        Category.baked => Cooking.baked,
+      };
+}
+
+/// How a dish is cooked, and how much of its raw weight is left after:
+/// water boils off a soup (уварка), meat shrinks in the pan (ужарка),
+/// dough loses moisture in the oven (упёк). Averages from cooking tables —
+/// the finished weight can always be corrected by the cook.
+enum Cooking {
+  none('No cooking', 1.0, 'mixed, blended or raw — weight stays the same'),
+  boiled('Boiled · soup', 0.9, 'about 10% of the water boils off'),
+  stewed('Stewed', 0.85, 'about 15% is lost while it simmers'),
+  fried('Fried', 0.75, 'about 25% is lost in the pan'),
+  baked('Baked', 0.85, 'about 15% of the moisture leaves in the oven');
+
+  const Cooking(this.label, this.yieldFactor, this.note);
+  final String label;
+  final double yieldFactor;
+  final String note;
 }
 
 const avatarIcons = [
@@ -160,12 +193,20 @@ class Profile {
 
 class Product {
   const Product(this.name, this.kcalPer100,
-      {this.own = false,
+      {this.protein = 0,
+      this.fat = 0,
+      this.carbs = 0,
+      this.own = false,
       this.categories = const [],
       this.liquid = false,
       this.tspGrams});
   final String name;
   final double kcalPer100;
+
+  /// Protein, fat and carbs per 100 g (or ml).
+  final double protein;
+  final double fat;
+  final double carbs;
   final bool own;
 
   /// Measured in ml (milk, coffee, juice); 1 ml ≈ 1 g.
@@ -181,40 +222,81 @@ class Product {
 
   bool isFor(Category c) => categories.contains(c.name);
 
-  Map<String, dynamic> toJson() => {'name': name, 'kcal': kcalPer100};
+  Map<String, dynamic> toJson() =>
+      {'name': name, 'kcal': kcalPer100, 'p': protein, 'f': fat, 'c': carbs};
 
   factory Product.fromJson(Map<String, dynamic> j, {bool own = false}) =>
       Product(j['name'] as String, (j['kcal'] as num).toDouble(),
+          protein: _num(j['p']),
+          fat: _num(j['f']),
+          carbs: _num(j['c']),
           own: own,
           categories: (j['for'] as List?)?.cast<String>() ?? const [],
           liquid: j['ml'] as bool? ?? false,
           tspGrams: (j['tsp'] as num?)?.toDouble());
 }
 
+double _num(Object? v) => (v as num?)?.toDouble() ?? 0;
+
 class Ingredient {
-  Ingredient(this.name, this.grams, this.kcalPer100, {this.liquid = false});
+  Ingredient(this.name, this.grams, this.kcalPer100,
+      {this.liquid = false,
+      this.proteinPer100 = 0,
+      this.fatPer100 = 0,
+      this.carbsPer100 = 0});
+
+  Ingredient.of(Product p, this.grams)
+      : name = p.name,
+        kcalPer100 = p.kcalPer100,
+        liquid = p.liquid,
+        proteinPer100 = p.protein,
+        fatPer100 = p.fat,
+        carbsPer100 = p.carbs;
+
   final String name;
 
   /// Amount in g, or ml for liquids.
   double grams;
   final double kcalPer100;
   final bool liquid;
+  final double proteinPer100;
+  final double fatPer100;
+  final double carbsPer100;
 
   String get unit => liquid ? 'ml' : 'g';
   double get kcal => grams * kcalPer100 / 100;
+  double get protein => grams * proteinPer100 / 100;
+  double get fat => grams * fatPer100 / 100;
+  double get carbs => grams * carbsPer100 / 100;
 
-  Map<String, dynamic> toJson() =>
-      {'name': name, 'grams': grams, 'kcal': kcalPer100, 'ml': liquid};
+  Ingredient copy() => Ingredient(name, grams, kcalPer100,
+      liquid: liquid,
+      proteinPer100: proteinPer100,
+      fatPer100: fatPer100,
+      carbsPer100: carbsPer100);
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'grams': grams,
+        'kcal': kcalPer100,
+        'ml': liquid,
+        'p': proteinPer100,
+        'f': fatPer100,
+        'c': carbsPer100,
+      };
 
   factory Ingredient.fromJson(Map<String, dynamic> j) => Ingredient(
       j['name'] as String,
       (j['grams'] as num).toDouble(),
       (j['kcal'] as num).toDouble(),
-      liquid: j['ml'] as bool? ?? false);
+      liquid: j['ml'] as bool? ?? false,
+      proteinPer100: _num(j['p']),
+      fatPer100: _num(j['f']),
+      carbsPer100: _num(j['c']));
 }
 
-/// A dish in My Kitchen: either homemade (ingredients + finished weight)
-/// or ready-made (just kcal per 100 g from the package).
+/// A saved dish: either homemade (ingredients + finished weight)
+/// or ready-made (numbers from the package).
 class Dish {
   Dish({
     required this.id,
@@ -222,8 +304,12 @@ class Dish {
     required this.category,
     required this.icon,
     required this.kcalPer100,
+    this.proteinPer100 = 0,
+    this.fatPer100 = 0,
+    this.carbsPer100 = 0,
     this.kcalPerServing,
     this.finishedWeight,
+    this.cooking,
     this.ingredients = const [],
   });
 
@@ -233,26 +319,53 @@ class Dish {
   final String icon;
   final double kcalPer100;
 
+  /// Per 100 g/ml — or per serving when [byServing].
+  final double proteinPer100;
+  final double fatPer100;
+  final double carbsPer100;
+
   /// Set for ready-made items counted by serving ("1 cupcake = 250 kcal").
   final double? kcalPerServing;
   final double? finishedWeight;
+  final Cooking? cooking;
   final List<Ingredient> ingredients;
 
   bool get homemade => ingredients.isNotEmpty;
   bool get byServing => kcalPerServing != null;
 
+  double _scale(double amount) => byServing ? amount : amount / 100;
+
   double kcalFor(double amount) =>
       byServing ? kcalPerServing! * amount : kcalPer100 * amount / 100;
+  double proteinFor(double amount) => proteinPer100 * _scale(amount);
+  double fatFor(double amount) => fatPer100 * _scale(amount);
+  double carbsFor(double amount) => carbsPer100 * _scale(amount);
 
   String get unit => byServing ? 'serving' : category.unit;
 
+  /// What lands in the meal unless you change it: one serving; a homemade
+  /// drink is the cup you made; otherwise a usual portion of this kind.
+  double get standardPortion {
+    if (byServing) return 1;
+    final w = finishedWeight;
+    if (category == Category.drinks && w != null && w <= 500) return w;
+    return category.standardPortion;
+  }
+
+  /// Raw weight × how much is left after cooking.
+  static double theoreticalWeight(List<Ingredient> ingredients, Cooking c) =>
+      ingredients.fold<double>(0, (s, i) => s + i.grams) * c.yieldFactor;
+
   /// The exact kernel: everything that went into the pot,
   /// divided by what the pot weighs when it's done.
-  static double? per100(List<Ingredient> ingredients, double finishedWeight) {
+  static double? per100(List<Ingredient> ingredients, double finishedWeight,
+      [double Function(Ingredient) of = _kcalOf]) {
     if (ingredients.isEmpty || finishedWeight <= 0) return null;
-    final total = ingredients.fold<double>(0, (s, i) => s + i.kcal);
+    final total = ingredients.fold<double>(0, (s, i) => s + of(i));
     return total / finishedWeight * 100;
   }
+
+  static double _kcalOf(Ingredient i) => i.kcal;
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -260,8 +373,12 @@ class Dish {
         'category': category.name,
         'icon': icon,
         'kcalPer100': kcalPer100,
+        'p': proteinPer100,
+        'f': fatPer100,
+        'c': carbsPer100,
         'kcalPerServing': kcalPerServing,
         'finishedWeight': finishedWeight,
+        'cooking': cooking?.name,
         'ingredients': ingredients.map((i) => i.toJson()).toList(),
       };
 
@@ -271,8 +388,14 @@ class Dish {
         category: Category.values.byName(j['category'] as String),
         icon: j['icon'] as String,
         kcalPer100: (j['kcalPer100'] as num).toDouble(),
+        proteinPer100: _num(j['p']),
+        fatPer100: _num(j['f']),
+        carbsPer100: _num(j['c']),
         kcalPerServing: (j['kcalPerServing'] as num?)?.toDouble(),
         finishedWeight: (j['finishedWeight'] as num?)?.toDouble(),
+        cooking: j['cooking'] == null
+            ? null
+            : Cooking.values.byName(j['cooking'] as String),
         ingredients: (j['ingredients'] as List)
             .map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -288,6 +411,9 @@ class Entry {
     required this.icon,
     required this.grams,
     required this.kcal,
+    this.protein = 0,
+    this.fat = 0,
+    this.carbs = 0,
     this.unit = 'g',
   });
 
@@ -300,6 +426,9 @@ class Entry {
   /// Amount eaten, in [unit]: g, ml or servings.
   final double grams;
   final double kcal;
+  final double protein;
+  final double fat;
+  final double carbs;
   final String unit;
 
   Map<String, dynamic> toJson() => {
@@ -310,6 +439,9 @@ class Entry {
         'icon': icon,
         'grams': grams,
         'kcal': kcal,
+        'p': protein,
+        'f': fat,
+        'c': carbs,
         'unit': unit,
       };
 
@@ -321,6 +453,9 @@ class Entry {
         icon: j['icon'] as String,
         grams: (j['grams'] as num).toDouble(),
         kcal: (j['kcal'] as num).toDouble(),
+        protein: _num(j['p']),
+        fat: _num(j['f']),
+        carbs: _num(j['c']),
         unit: j['unit'] as String? ?? 'g',
       );
 }

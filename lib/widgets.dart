@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'models.dart';
 import 'state.dart';
 import 'theme.dart';
 
@@ -18,6 +19,31 @@ class Icon3D extends StatelessWidget {
         width: size,
         height: size,
         filterQuality: FilterQuality.medium,
+      );
+}
+
+/// A 3D icon on a black tile, like the logo on the start screen.
+/// The pictures were drawn on black: there they look deep, on emerald flat.
+class IconOnBlack extends StatelessWidget {
+  const IconOnBlack(this.name, {super.key, this.size = 48});
+  final String name;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        width: size,
+        height: size,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(size * 0.24),
+          gradient: const RadialGradient(
+            center: Alignment(0, -0.35),
+            radius: 0.9,
+            colors: [Color(0xFF1E1E1E), Color(0xFF030303)],
+          ),
+          border: Border.all(color: PC.logoGold.withOpacity(0.35)),
+        ),
+        child: Icon3D(name, size: size * 0.82),
       );
 }
 
@@ -296,6 +322,12 @@ class DailyBanner extends StatelessWidget {
                 Expanded(child: _side('Eaten', '$eaten', PC.logoGoldLight)),
               ],
             ),
+            const SizedBox(height: 8),
+            MacrosRow(
+                protein: s.proteinDay,
+                fat: s.fatDay,
+                carbs: s.carbsDay,
+                size: 12),
           ],
         ),
       ),
@@ -411,12 +443,125 @@ class IconPicker extends StatelessWidget {
                     color: i == selected ? PC.gold : Colors.transparent,
                     width: 1.5),
               ),
-              child: Icon3D(i, size: size),
+              child: IconOnBlack(i, size: size),
             ),
           ),
       ],
     );
   }
+}
+
+/// What kind of dish: drinks, baked goods, soups or main dishes.
+class CategoryChoice extends StatelessWidget {
+  const CategoryChoice(
+      {super.key, required this.selected, required this.onSelect});
+  final Category selected;
+  final ValueChanged<Category> onSelect;
+
+  @override
+  Widget build(BuildContext context) => Row(
+        children: [
+          for (final c in Category.values)
+            Expanded(
+              child: GestureDetector(
+                onTap: () => onSelect(c),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 150),
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: c == selected
+                        ? PC.logoGold.withOpacity(0.16)
+                        : Colors.white.withOpacity(0.03),
+                    border: Border.all(
+                        color: c == selected
+                            ? PC.logoGold
+                            : PC.logoGold.withOpacity(0.2),
+                        width: 1.2),
+                  ),
+                  child: Column(
+                    children: [
+                      IconOnBlack(c.icon, size: 40),
+                      const SizedBox(height: 4),
+                      Text(c.label.split(' ').first,
+                          style: PC.logo(12,
+                              color: c == selected
+                                  ? PC.logoGoldLight
+                                  : PC.textSoft)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ],
+      );
+}
+
+/// Protein · fat · carbs in grams.
+class MacrosRow extends StatelessWidget {
+  const MacrosRow(
+      {super.key,
+      required this.protein,
+      required this.fat,
+      required this.carbs,
+      this.size = 13});
+  final double protein;
+  final double fat;
+  final double carbs;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _one('Protein', protein),
+          _one('Fat', fat),
+          _one('Carbs', carbs),
+        ],
+      );
+
+  Widget _one(String label, double g) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            Text('${g.round()} g', style: PC.logo(size + 3, color: PC.craft)),
+            Text(label, style: PC.logo(size - 1, color: PC.textSoft)),
+          ],
+        ),
+      );
+}
+
+/// Three optional fields for protein, fat and carbs from a package label.
+class MacroFields extends StatelessWidget {
+  const MacroFields(
+      {super.key,
+      required this.protein,
+      required this.fat,
+      required this.carbs,
+      this.onChanged});
+  final TextEditingController protein;
+  final TextEditingController fat;
+  final TextEditingController carbs;
+  final ValueChanged<String>? onChanged;
+
+  @override
+  Widget build(BuildContext context) => Row(
+        children: [
+          for (final (c, l) in [
+            (protein, 'Protein'),
+            (fat, 'Fat'),
+            (carbs, 'Carbs')
+          ])
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 3),
+                child: NumberField(
+                    controller: c, label: l, suffix: 'g', onChanged: onChanged),
+              ),
+            ),
+        ],
+      );
 }
 
 /// Numeric text field (accepts "12.5" and "12,5").

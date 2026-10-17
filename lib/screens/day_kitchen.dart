@@ -14,7 +14,7 @@ const mealIcons = {
 };
 
 /// My Kitchen for the selected day: the four meals and water.
-/// The recipe book (library) lives in the header, like the calculator on home.
+/// Saved dishes live in the header book, like the calculator on home.
 class DayKitchenScreen extends StatelessWidget {
   const DayKitchenScreen({super.key});
 
@@ -50,11 +50,11 @@ class DayKitchenScreen extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          _RecipeBookButton(
+                          _SavedDishesButton(
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => const KitchenScreen())),
+                                    builder: (_) => const SavedDishesScreen())),
                           ),
                         ],
                       ),
@@ -85,9 +85,9 @@ class DayKitchenScreen extends StatelessWidget {
   }
 }
 
-/// A small gold recipe book in the header — opens the dish library.
-class _RecipeBookButton extends StatelessWidget {
-  const _RecipeBookButton({required this.onTap});
+/// A small gold book in the header — opens Saved dishes.
+class _SavedDishesButton extends StatelessWidget {
+  const _SavedDishesButton({required this.onTap});
   final VoidCallback onTap;
 
   @override
@@ -98,7 +98,7 @@ class _RecipeBookButton extends StatelessWidget {
           children: [
             const GoldRimIcon(Icons.menu_book_outlined, size: 44),
             const SizedBox(height: 2),
-            Text('Recipes', style: PC.logo(10, color: PC.logoGoldLight)),
+            Text('Saved dishes', style: PC.logo(10, color: PC.logoGoldLight)),
           ],
         ),
       );
