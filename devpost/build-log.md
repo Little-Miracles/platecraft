@@ -38,6 +38,10 @@ Calories come from real ingredients and real formulas, never from a guess.
 | Product search in your language ("буряк" finds Beetroot) | The product table is in English | Nobody has to know the English word for their vegetable |
 | **Pick by size**: +1 small / medium / large egg, an apple with its size in cm, a clove, a slice | Nobody weighs an egg; people choose a size by eye | Logging stays quick, grams stay possible |
 | Five fruits added, and quail egg for broth | A morning fresh juice needed oranges; broth often gets quail eggs | The table follows real cooking |
+| **Product** — a third way into a meal for food eaten as it is | Sour cream for the borscht, butter, an apple are neither cooked nor a labelled ready-made dish | Borscht from Saved dishes + 2 tablespoons of sour cream, in two taps |
+| Fruit gets the apple picture; the icon choice in Ready-made moved up | A snack apple showed a cupcake, and the icon choice was hidden at the bottom | The picture matches the food |
+| **Three goals** in the calculator: health, lose weight, gain weight (target ×1.0 / −15% / +10%) | The same 1,500 kcal is a success for one person and too little for another | Every number is read against *your* goal |
+| **A caring evening card** from 20:30: eaten of target, read by the goal; water with "check with your dietitian". Away for a few days? It talks about the last day you logged, with its date | A tracker that only collects numbers feels cold | Soft words, no fireworks, never blame |
 
 ## What comes next (not in this prototype)
 
@@ -50,6 +54,8 @@ Calories come from real ingredients and real formulas, never from a guess.
 - The same server would carry the translations, instead of the free public
   translator the prototype uses.
 - Your own photo of a dish instead of an icon.
+- A real push message at 20:30 in the phone app (as in our Smart Body Life);
+  in the browser the evening card waits on the home screen instead.
 
 ## The formulas
 
