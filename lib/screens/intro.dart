@@ -31,9 +31,26 @@ class _IntroScreenState extends State<IntroScreen> {
   bool _calcVisible = false;
   bool _done = false; // goal is calculated → show result + Continue
 
+  /// The English line being typed, so it can be retyped in a new language.
+  String _source = '';
+  VoidCallback? _sourceDone;
+  String _lang = TranslationService.instance.lang;
+
+  /// The globe can be used here or in the calculator: retype in the new language.
+  void _langChanged() {
+    final now = TranslationService.instance.lang;
+    if (now == _lang) return;
+    _lang = now;
+    if (_source.isNotEmpty) {
+      setState(() => _shown = '');
+      _type(_source, onDone: _sourceDone);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    TranslationService.instance.revision.addListener(_langChanged);
     final p = AppState.instance.profile;
     if (p == null) {
       _type(_invite);
@@ -44,15 +61,22 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   void dispose() {
+    TranslationService.instance.revision.removeListener(_langChanged);
     _timer?.cancel();
     super.dispose();
   }
 
   /// Translates [text] into the chosen language first, then types it.
+  /// A late answer for an older line or language is dropped.
   void _type(String text, {int passes = 1, VoidCallback? onDone}) {
     _timer?.cancel();
+    _source = text;
+    _sourceDone = onDone;
+    final lang = TranslationService.instance.lang;
     TranslationService.instance.translate(text).then((line) {
-      if (mounted) _typeNow(line, passes: passes, onDone: onDone);
+      if (!mounted || text != _source) return;
+      if (lang != TranslationService.instance.lang) return;
+      _typeNow(line, passes: passes, onDone: onDone);
     });
   }
 
@@ -121,7 +145,13 @@ class _IntroScreenState extends State<IntroScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   children: [
-                    const SizedBox(height: 56),
+                    const SizedBox(
+                      height: 56,
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: LanguageButton(color: PC.antiqueLight),
+                      ),
+                    ),
                     SizedBox(
                       height: 132,
                       child: m.Text.rich(
