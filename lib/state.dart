@@ -48,7 +48,7 @@ class AppState extends ChangeNotifier {
         .toList();
 
     final p = _prefs.getString('profile');
-    if (p != null) profile = Profile.fromJson(jsonDecode(p));
+    profile = p == null ? null : Profile.fromJson(jsonDecode(p));
 
     dishes = _list('dishes').map(Dish.fromJson).toList();
     ownProducts = _list('ownProducts')
@@ -57,10 +57,10 @@ class AppState extends ChangeNotifier {
     entries = _list('entries').map(Entry.fromJson).toList();
 
     final w = _prefs.getString('water');
-    if (w != null) {
-      waterByDate = (jsonDecode(w) as Map<String, dynamic>)
-          .map((k, v) => MapEntry(k, v as int));
-    }
+    waterByDate = w == null
+        ? {}
+        : (jsonDecode(w) as Map<String, dynamic>)
+            .map((k, v) => MapEntry(k, v as int));
   }
 
   List<Map<String, dynamic>> _list(String key) {
@@ -208,6 +208,59 @@ class AppState extends ChangeNotifier {
   void closeSummary(DaySummary s) {
     _prefs.setString('summaryClosed', key(s.date));
     notifyListeners();
+  }
+
+  // ---- Backup ----
+  /// Everything in one file: profile, dishes, own products, every day's
+  /// meals and water. Saved by the person, opened again on a new phone.
+  Map<String, dynamic> backup() => {
+        'app': 'PlateCraft',
+        'version': 1,
+        'saved': DateTime.now().toIso8601String(),
+        'profile': profile?.toJson(),
+        'dishes': dishes.map((d) => d.toJson()).toList(),
+        'ownProducts': ownProducts.map((p) => p.toJson()).toList(),
+        'entries': entries.map((e) => e.toJson()).toList(),
+        'water': waterByDate,
+      };
+
+  String backupFileName([DateTime? now]) =>
+      'PlateCraft-backup-${key(now ?? DateTime.now())}.json';
+
+  /// Replaces everything with a backup. Throws [FormatException] if the file
+  /// isn't a PlateCraft backup — then nothing is changed.
+  void restore(Map<String, dynamic> j) {
+    if (j['app'] != 'PlateCraft') {
+      throw const FormatException('Not a PlateCraft backup');
+    }
+    List<Map<String, dynamic>> list(String k) =>
+        ((j[k] as List?) ?? const []).cast<Map<String, dynamic>>();
+    // Read everything first, so a broken file changes nothing.
+    final p = j['profile'] == null
+        ? null
+        : Profile.fromJson(j['profile'] as Map<String, dynamic>);
+    final d = list('dishes').map(Dish.fromJson).toList();
+    final o =
+        list('ownProducts').map((x) => Product.fromJson(x, own: true)).toList();
+    final e = list('entries').map(Entry.fromJson).toList();
+    final w = ((j['water'] as Map?) ?? const {})
+        .map((k, v) => MapEntry(k as String, (v as num).toInt()));
+
+    profile = p;
+    dishes = d;
+    ownProducts = o;
+    entries = e;
+    waterByDate = w;
+    if (p == null) {
+      _prefs.remove('profile');
+    } else {
+      _prefs.setString('profile', jsonEncode(p.toJson()));
+    }
+    _prefs.setString('dishes', jsonEncode(d.map((x) => x.toJson()).toList()));
+    _prefs.setString(
+        'ownProducts', jsonEncode(o.map((x) => x.toJson()).toList()));
+    _prefs.setString('entries', jsonEncode(e.map((x) => x.toJson()).toList()));
+    _save('water', w);
   }
 
   // ---- Water ----
