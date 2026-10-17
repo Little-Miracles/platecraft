@@ -40,6 +40,7 @@ The screens evolved while building — every change and the reason for it is in 
 ## Credits
 
 - 3D food and avatar icons: [Microsoft Fluent Emoji](https://github.com/microsoft/fluentui-emoji) (MIT License).
+- The beetroot (Fluent Emoji has none) was drawn for the app in the same style — `tool/draw_beetroot.py`.
 - Calorie, protein, fat and carb values: typical per-100 g values based on USDA FoodData Central (carbs without fiber, as on EU labels).
 - Cooking yields: average weight-loss factors from cooking tables.
 - Fonts: Marcellus, Playfair Display, Manrope (Google Fonts, OFL).
