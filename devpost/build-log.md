@@ -33,6 +33,23 @@ Calories come from real ingredients and real formulas, never from a guess.
 | Food pictures on black tiles, like the logo | The 3D pictures were drawn on black; on green they looked flat | Depth, and one look with the logo |
 | **Bug fix:** the week strip and water drops on home update at once | The banner said 60 kcal eaten, the week said "No meals logged this week yet" | Every number on home must agree |
 | Week columns taller, in the plate's gold, with the day's kcal above | Columns were 3 px high and easy to miss | You see your week at a glance |
+| **A language globe**: English, Ukrainian, German, French. One choice changes every screen and is remembered | We were holding a phone with Google Translate over the screen to read our own app | People cook in their own language |
+| Translation **on the fly**: each phrase goes to a translator and comes back; kept only in memory. No translation files inside | Shipping word lists for every language makes the app heavy with text most people never see | Light app; without internet it simply stays in English |
+| Product search in your language ("буряк" finds Beetroot) | The product table is in English | Nobody has to know the English word for their vegetable |
+| **Pick by size**: +1 small / medium / large egg, an apple with its size in cm, a clove, a slice | Nobody weighs an egg; people choose a size by eye | Logging stays quick, grams stay possible |
+| Five fruits added, and quail egg for broth | A morning fresh juice needed oranges; broth often gets quail eggs | The table follows real cooking |
+
+## What comes next (not in this prototype)
+
+- **AI that fills in products from a global food library.** Type "Golden
+  Delicious apple" or the name on a cupcake label, and AI finds the product
+  with its calories, protein, fat and carbs, ready to add. This needs an AI
+  key, and the key must live on our own server (a proxy), never inside the
+  app. This hackathon's task doesn't use keyed AI, so the prototype keeps a
+  built-in table and lets you add your own products by hand.
+- The same server would carry the translations, instead of the free public
+  translator the prototype uses.
+- Your own photo of a dish instead of an icon.
 
 ## The formulas
 
