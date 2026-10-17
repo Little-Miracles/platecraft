@@ -48,4 +48,25 @@ void main() {
     debugPrint('SCREEN: ${typed(tester)}');
     expect(typed(tester), contains('Your daily goal is'));
   });
+
+  testWidgets('switching the language retypes the line', (tester) async {
+    AppState.instance.profile = null;
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    await tester.pumpWidget(const MaterialApp(home: IntroScreen()));
+    for (var i = 0; i < 200; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    expect(typed(tester), contains("let's find"));
+    TranslationService.instance.fake = (text, from, to) =>
+        Future.delayed(const Duration(milliseconds: 300), () => 'UK $text');
+    await TranslationService.instance.setLang('uk');
+    for (var i = 0; i < 300; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    debugPrint('AFTER: ${typed(tester)}');
+    expect(typed(tester), contains("UK First, let's find"));
+    await TranslationService.instance.setLang('en');
+    TranslationService.instance.fake = null;
+  });
 }

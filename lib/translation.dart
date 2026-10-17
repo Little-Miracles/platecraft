@@ -62,8 +62,11 @@ class TranslationService {
     final key = '$lang|$text';
     final hit = _cache[key];
     if (hit != null) return Future.value(hit);
-    return _pending[key] ??=
-        _fetch(text, 'en', lang).whenComplete(() => _pending.remove(key));
+    // The braces matter: `=> _pending.remove(key)` would hand back this very
+    // future, and whenComplete would wait for itself forever.
+    return _pending[key] ??= _fetch(text, 'en', lang).whenComplete(() {
+      _pending.remove(key);
+    });
   }
 
   /// A search typed in the user's language, turned into English so it can
@@ -74,8 +77,21 @@ class TranslationService {
     return _cache[key] ??= await _fetch(text, lang, 'en', remember: false);
   }
 
+  /// Tests put a fake translator here (there is no network in tests).
+  @visibleForTesting
+  Future<String?> Function(String text, String from, String to)? fake;
+
   Future<String> _fetch(String text, String from, String to,
       {bool remember = true}) async {
+    if (fake != null) {
+      final out = await fake!(text, from, to);
+      if (out != null && remember) {
+        _cache['$to|$text'] = out;
+        _outputs.add(out);
+        revision.value++;
+      }
+      return out ?? text;
+    }
     try {
       // Google's free endpoint (the one the Chrome translate bubble uses);
       // it allows calls from a web page.
