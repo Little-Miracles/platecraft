@@ -1,6 +1,6 @@
 ---
 doc: spec
-status: draft
+status: draft (updated 17.10 — two flows, estimated weight, macros; see build-log.md)
 ---
 
 # PlateCraft — Technical Spec
@@ -16,10 +16,10 @@ The product table is a small JSON file shipped with the app. No server, no AI, n
 PRD ref: `prd.md > The Core Journey`.
 1. Start → Home reads `AppState.profile` and today's entries → banner shows target / eaten / water.
 2. Calculator → user enters data → `AppState.saveProfile()` computes BMR × activity and water → saved → banner updates.
-3. My Kitchen → Meals → Meal (e.g. lunch) → Category (soups).
-4. Homemade → Dish builder: user searches products (`assets/data/products.json` + own products), adds grams → enters finished weight → builder shows `kcal/100 g = Σ(grams × kcal/100) ÷ finishedWeight × 100` live → Save → `AppState.saveDish()` stores it in My Kitchen.
-5. Portion sheet → grams eaten → `AppState.addEntry(meal, dish, grams)` → entry stored with today's date → Home banner "eaten" grows.
-6. Next day → category screen lists the saved borscht → portion sheet → add.
+3. My Kitchen → Meal (e.g. lunch) → **Homemade** (or Ready-made).
+4. Dish builder: user picks the kind (soup), searches products (`assets/data/products.json` + own products), adds grams → picks how it's cooked → builder estimates `finishedWeight = Σ grams × Cooking.yieldFactor` (or uses the weight the user typed) and shows `per 100 g = Σ(grams × value/100) ÷ finishedWeight × 100` live for kcal, protein, fat and carbs → Save → `AppState.saveDish()` stores it in Saved dishes.
+5. Portion sheet opens at `Dish.standardPortion` (bowl 300 g) → `AppState.addEntry(meal, dish, grams)` → entry with kcal + macros stored for the selected day → Home banner, week strip and drops update at once.
+6. Next day → Saved dishes (or "From Saved dishes" on a meal) → tap the borscht → choose the meal → portion sheet → add.
 
 ## Stack
 - **Flutter 3.13.9 / Dart 3.1** (already installed on the learner's Mac, runs on macOS 12) — web target. https://docs.flutter.dev
