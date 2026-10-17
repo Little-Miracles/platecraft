@@ -8,15 +8,17 @@ Built for Devpost **Build With AI: Basics** (October 2026), following the plan-f
 
 ## What it does
 
-- **Daily goal** — a golden calculator works out your daily calories (Mifflin–St Jeor × activity) and water (30 ml per kg).
+- **Daily goal** — a golden calculator works out your daily calories (Mifflin–St Jeor × activity) for your goal — health, losing (−15%) or gaining (+10%) weight — and water (30 ml per kg).
 - **Home** — a golden plate fills sector by sector as you eat, with protein · fat · carbs below; water drops; a week of golden columns to look back at any day.
-- **My Kitchen** — breakfast, lunch, dinner, snack and water for the selected day.
-- **A meal is where you cook** — right there:
-  - *Homemade*: ingredients in grams or ml (with teaspoon / tablespoon helpers) + how it's cooked → estimated finished weight (or your own) → exact kcal, protein, fat, carbs per 100 g.
+- **A caring evening card** — from 20:30 (or the next time you open the app) a soft summary of the day, read by your goal; water always with "check with your dietitian".
+- **My Kitchen** — breakfast, lunch, dinner, snack and water for the selected day. Three ways into a meal:
+  - *Product*: food eaten as it is (sour cream, an apple) — grams, spoons or a size by eye (+1 medium egg).
+  - *Homemade*: ingredients + how it's cooked → estimated finished weight (or your own) → exact kcal, protein, fat, carbs per 100 g.
   - *Ready-made*: numbers from the label, per 100 g or per serving.
-  - Saving puts a usual portion into the meal (change it if yours differs) and the recipe into Saved dishes.
-- **Saved dishes** — everything you've made: add it to any meal, edit it, delete it.
+- **My saved dishes** — everything you've made: add it to any meal, edit it, delete it.
 - **Water** — a wheel to log any amount, plus quick +500 ml / +1 L.
+- **Language globe** — English, Ukrainian, German, French, translated on the fly (no translation files inside); product search works in your language.
+- **Backup** — save all your data to one file and restore it on a new phone.
 
 Everything is stored in the browser. No accounts, no server, no AI keys.
 
