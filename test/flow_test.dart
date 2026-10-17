@@ -61,6 +61,16 @@ void main() {
     expect(s.eatenDay, greaterThan(0));
   });
 
+  test('countable products have sizes to pick by eye', () {
+    final egg =
+        AppState.instance.builtInProducts.firstWhere((x) => x.name == 'Egg');
+    expect(egg.pieces.map((p) => p.label), ['Small', 'Medium', 'Large']);
+    expect(egg.pieces[1].grams, 51);
+    final apple =
+        AppState.instance.builtInProducts.firstWhere((x) => x.name == 'Apple');
+    expect(apple.pieces.last.hint, '8.5 cm');
+  });
+
   test('a homemade cup of coffee is added whole', () {
     final cup = Dish(
         id: 'c',

@@ -111,6 +111,22 @@ class _DishBuilderScreenState extends State<DishBuilderScreen>
                 label: 'How much went in?',
                 suffix: p.unit,
                 autofocus: true),
+            if (p.pieces.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  for (final piece in p.pieces)
+                    ActionChip(
+                      label: Text(piece.hint == null
+                          ? '+1 ${piece.label.toLowerCase()} (${fmt(piece.grams)} g)'
+                          : '+1 ${piece.label.toLowerCase()} · ${piece.hint} (${fmt(piece.grams)} g)'),
+                      onPressed: () => addSpoon(piece.grams),
+                    ),
+                ],
+              ),
+            ],
             if (tsp != null) ...[
               const SizedBox(height: 12),
               Wrap(

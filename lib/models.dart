@@ -191,6 +191,20 @@ class Profile {
       );
 }
 
+/// One piece of a countable product: "Medium · 7.5 cm · 180 g".
+/// Nobody weighs an egg — people pick a size by eye.
+class Piece {
+  const Piece(this.label, this.grams, [this.hint]);
+  final String label;
+  final double grams;
+
+  /// Rough size to compare with, e.g. "7.5 cm" across an apple.
+  final String? hint;
+
+  factory Piece.fromJson(List<dynamic> j) => Piece(j[0] as String,
+      (j[1] as num).toDouble(), j.length > 2 ? j[2] as String? : null);
+}
+
 class Product {
   const Product(this.name, this.kcalPer100,
       {this.protein = 0,
@@ -199,7 +213,8 @@ class Product {
       this.own = false,
       this.categories = const [],
       this.liquid = false,
-      this.tspGrams});
+      this.tspGrams,
+      this.pieces = const []});
   final String name;
   final double kcalPer100;
 
@@ -214,6 +229,9 @@ class Product {
 
   /// Weight of one teaspoon, for sugar, honey, cocoa… (tablespoon = 3×).
   final double? tspGrams;
+
+  /// Sizes of one piece (egg, apple, potato…), edible weight.
+  final List<Piece> pieces;
 
   String get unit => liquid ? 'ml' : 'g';
 
@@ -233,7 +251,11 @@ class Product {
           own: own,
           categories: (j['for'] as List?)?.cast<String>() ?? const [],
           liquid: j['ml'] as bool? ?? false,
-          tspGrams: (j['tsp'] as num?)?.toDouble());
+          tspGrams: (j['tsp'] as num?)?.toDouble(),
+          pieces: [
+            for (final p in (j['pcs'] as List?) ?? const [])
+              Piece.fromJson(p as List)
+          ]);
 }
 
 double _num(Object? v) => (v as num?)?.toDouble() ?? 0;
