@@ -42,6 +42,9 @@ Calories come from real ingredients and real formulas, never from a guess.
 | Fruit gets the apple picture; the icon choice in Ready-made moved up | A snack apple showed a cupcake, and the icon choice was hidden at the bottom | The picture matches the food |
 | **Three goals** in the calculator: health, lose weight, gain weight (target ×1.0 / −15% / +10%) | The same 1,500 kcal is a success for one person and too little for another | Every number is read against *your* goal |
 | **A caring evening card** from 20:30: eaten of target, read by the goal; water with "check with your dietitian". Away for a few days? It talks about the last day you logged, with its date | A tracker that only collects numbers feels cold | Soft words, no fireworks, never blame |
+| Every product has its own picture (31 more from the same Fluent set; a beetroot drawn for the app in the same style) | A strawberry showed as an apple — in a demo that reads as a mistake | Details that match build trust |
+| Translation fixes: the whole week as one phrase, full shelf names, "My saved dishes" | Short words alone came back wrong ("Fr" → "О", "Main" → "Головна") | The translator needs context, like a person |
+| **Backup: save all data to a file, restore it on a new phone** | Without a server, a new phone would start empty | Your kitchen and your history move with you |
 
 ## What comes next (not in this prototype)
 
@@ -54,6 +57,7 @@ Calories come from real ingredients and real formulas, never from a guess.
 - The same server would carry the translations, instead of the free public
   translator the prototype uses.
 - Your own photo of a dish instead of an icon.
+- The backup file goes to the cloud by itself and comes back on a new phone.
 - A real push message at 20:30 in the phone app (as in our Smart Body Life);
   in the browser the evening card waits on the home screen instead.
 
