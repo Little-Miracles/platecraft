@@ -94,12 +94,12 @@ class _SavedDishesScreenState extends State<SavedDishesScreen> {
         final dishes = s.dishesIn(_tab);
         return PCScaffold(
           title: widget.meal == null
-              ? 'Saved dishes'
+              ? 'My saved dishes'
               : 'Add to ${widget.meal!.label}',
           body: Column(
             children: [
               SizedBox(
-                height: 92,
+                height: 112,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
@@ -116,7 +116,7 @@ class _SavedDishesScreenState extends State<SavedDishesScreen> {
                         children: [
                           Text(
                               widget.meal == null
-                                  ? 'Tap a dish to add it to a meal'
+                                  ? 'Tap a dish to add it to breakfast, lunch, dinner or a snack'
                                   : 'Tap a dish to add your portion',
                               style: PC.body(13, color: PC.textSoft)),
                           const SizedBox(height: 10),
@@ -158,10 +158,16 @@ class _SavedDishesScreenState extends State<SavedDishesScreen> {
             children: [
               IconOnBlack(c.icon, size: 40),
               const SizedBox(height: 4),
-              Text(c.label.split(' ').first,
-                  style: PC.body(12,
-                      color: on ? PC.goldLight : PC.textSoft,
-                      weight: FontWeight.w700)),
+              // The whole name: one word alone ("Main") translates wrong.
+              Text(c.label,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: PC
+                      .body(11,
+                          color: on ? PC.goldLight : PC.textSoft,
+                          weight: FontWeight.w700)
+                      .copyWith(height: 1.1)),
               Text('${s.dishesIn(c).length}',
                   style: PC.body(10, color: PC.textSoft)),
             ],
@@ -320,7 +326,7 @@ class MealScreen extends StatelessWidget {
                         builder: (_) => SavedDishesScreen(meal: meal))),
                 icon: const Icon(Icons.menu_book_outlined,
                     color: PC.logoGold, size: 20),
-                label: Text('From Saved dishes',
+                label: Text('From my saved dishes',
                     style: PC.logo(15, color: PC.logoGoldLight)),
               ),
               const SizedBox(height: 4),
@@ -482,7 +488,7 @@ Future<bool?> showPortionSheet(BuildContext context, Meal meal, Dish dish,
                           Navigator.pop(sheetContext, true);
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(justSaved
-                                  ? 'Saved to Saved dishes · ${kcal!.round()} kcal added to ${meal.label}'
+                                  ? 'Saved to my saved dishes · ${kcal!.round()} kcal added to ${meal.label}'
                                   : 'Added ${kcal!.round()} kcal to ${meal.label}')));
                         }),
             ],

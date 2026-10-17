@@ -100,7 +100,13 @@ class _SavedDishesButton extends StatelessWidget {
           children: [
             const GoldRimIcon(Icons.menu_book_outlined, size: 44),
             const SizedBox(height: 2),
-            Text('Saved dishes', style: PC.logo(10, color: PC.logoGoldLight)),
+            SizedBox(
+              width: 76,
+              child: Text('My saved dishes',
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  style: PC.logo(10, color: PC.logoGoldLight)),
+            ),
           ],
         ),
       );

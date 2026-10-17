@@ -496,11 +496,16 @@ class CategoryChoice extends StatelessWidget {
                     children: [
                       IconOnBlack(c.icon, size: 40),
                       const SizedBox(height: 4),
-                      Text(c.label.split(' ').first,
-                          style: PC.logo(12,
-                              color: c == selected
-                                  ? PC.logoGoldLight
-                                  : PC.textSoft)),
+                      Text(c.label,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: PC
+                              .logo(11,
+                                  color: c == selected
+                                      ? PC.logoGoldLight
+                                      : PC.textSoft)
+                              .copyWith(height: 1.1)),
                     ],
                   ),
                 ),
@@ -685,6 +690,18 @@ const _months = [
   'Dec',
 ];
 
+/// Short weekday names in the chosen language. The whole week goes to the
+/// translator as one phrase — two letters alone ("Fr", "Sa") come back wrong.
+String weekdayShort(int weekday) {
+  const en = 'Mon Tue Wed Thu Fri Sat Sun';
+  final shown = t(en);
+  final names = shown.replaceAll('.', '').trim().split(RegExp(r'\s+'));
+  if (shown == en || names.length != 7) {
+    return en.split(' ')[weekday - 1].substring(0, 2); // Mo Tu We…
+  }
+  return names[weekday - 1];
+}
+
 String dayTitle(DateTime d) {
   if (AppState.key(d) == AppState.today()) return 'Today';
   final yesterday = DateTime.now().subtract(const Duration(days: 1));
@@ -719,11 +736,13 @@ class _WeekStripState extends State<WeekStrip> {
     super.initState();
     _syncToSelected();
     AppState.instance.addListener(_changed);
+    TranslationService.instance.revision.addListener(_changed);
   }
 
   @override
   void dispose() {
     AppState.instance.removeListener(_changed);
+    TranslationService.instance.revision.removeListener(_changed);
     super.dispose();
   }
 
@@ -853,7 +872,7 @@ class _WeekStripState extends State<WeekStrip> {
               ),
             ),
             const SizedBox(height: 4),
-            Text(_weekdays[d.weekday - 1].substring(0, 2),
+            m.Text(weekdayShort(d.weekday),
                 style:
                     PC.logo(10, color: future ? Colors.white24 : PC.textSoft)),
             Text('${d.day}',
