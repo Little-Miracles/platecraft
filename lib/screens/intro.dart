@@ -33,7 +33,7 @@ class _IntroScreenState extends State<IntroScreen> {
     super.initState();
     final p = AppState.instance.profile;
     if (p == null) {
-      _type(_invite, passes: 3);
+      _type(_invite);
     } else {
       _showResult(welcomeBack: true);
     }
