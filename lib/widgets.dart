@@ -649,10 +649,21 @@ class _WeekStripState extends State<WeekStrip> {
     _syncedDay = AppState.instance.day;
   }
 
+  // The strip is const on home, so it listens itself: a new meal or water
+  // must show up here right away, not on the next visit.
+  void _changed() => setState(() {});
+
   @override
   void initState() {
     super.initState();
     _syncToSelected();
+    AppState.instance.addListener(_changed);
+  }
+
+  @override
+  void dispose() {
+    AppState.instance.removeListener(_changed);
+    super.dispose();
   }
 
   @override
@@ -742,7 +753,7 @@ class _WeekStripState extends State<WeekStrip> {
     final future = d.isAfter(today);
     final selected = AppState.key(d) == s.day;
     final over = target != null && kcal > target;
-    final h = maxKcal <= 0 ? 0.0 : (kcal / maxKcal * 22).clamp(0.0, 22.0);
+    final h = maxKcal <= 0 ? 0.0 : (kcal / maxKcal * 40).clamp(0.0, 40.0);
 
     return GestureDetector(
       onTap: future ? null : () => s.selectDay(d),
@@ -757,18 +768,27 @@ class _WeekStripState extends State<WeekStrip> {
         ),
         child: Column(
           children: [
+            // Eaten that day: the number over a gold column, gold like the plate.
             SizedBox(
-              height: 24,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: 8,
-                  height: h < 3 && kcal > 0 ? 3 : h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: over ? PC.purpleLight : PC.logoGold,
+              height: 58,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (kcal > 0)
+                    Text('${kcal.round()}',
+                        style: PC.logo(9,
+                            color: over ? PC.purpleLight : PC.logoGoldLight)),
+                  const SizedBox(height: 2),
+                  Container(
+                    width: 10,
+                    height: h < 4 && kcal > 0 ? 4 : h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: over ? PC.purpleLight : null,
+                      gradient: over ? null : PC.logoGoldGradient,
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
             const SizedBox(height: 4),
@@ -827,7 +847,13 @@ class WaterDrops extends StatelessWidget {
   final Widget? trailing;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ListenableBuilder(
+        // Const on home, so it listens itself for new water.
+        listenable: AppState.instance,
+        builder: (context, _) => _drops(),
+      );
+
+  Widget _drops() {
     final s = AppState.instance;
     final goal = s.profile?.waterMl ?? 2000;
     final ml = s.waterDay;

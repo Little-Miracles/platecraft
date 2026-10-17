@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:platecraft/models.dart';
+import 'package:platecraft/screens/start_home.dart';
 import 'package:platecraft/state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   setUpAll(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
+    GoogleFonts.config.allowRuntimeFetching = false;
     SharedPreferences.setMockInitialValues({});
     await AppState.instance.load();
   });
@@ -102,5 +106,38 @@ void main() {
           'kcal': 120,
         }).protein,
         0);
+  });
+
+  // The bug from 16.10: the week strip and the drops are const on home and
+  // did not hear new meals or water until the screen was opened again.
+  testWidgets('home week strip and drops update at once', (tester) async {
+    final s = AppState.instance;
+    s.saveProfile(Profile(
+        female: true,
+        age: 35,
+        heightCm: 158,
+        weightKg: 78,
+        activity: 1.375,
+        avatar: 'av_woman'));
+    s.entries.clear();
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+    await tester.pump();
+    expect(find.text('No meals logged this week yet'), findsOneWidget);
+
+    final cup = Dish(
+        id: 'w',
+        name: 'Coffee',
+        category: Category.drinks,
+        icon: 'drinks',
+        kcalPer100: 24);
+    s.addEntry(Meal.breakfast, cup, 250);
+    final ml = s.waterDay;
+    s.addWater(250);
+    await tester.pump();
+    expect(find.text('No meals logged this week yet'), findsNothing);
+    expect(find.text('60'), findsWidgets);
+    expect(find.text('${ml + 250} / ${s.profile!.waterMl} ml'), findsOneWidget);
   });
 }
