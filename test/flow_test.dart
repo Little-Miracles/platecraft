@@ -73,8 +73,10 @@ void main() {
     expect(e.icon, 'milk');
     Product p(String n) => s.builtInProducts.firstWhere((x) => x.name == n);
     expect(p('Apple').icon, 'snack'); // the apple picture
-    expect(p('Apple juice').icon, 'drinks');
-    expect(p('Potato').icon, 'salad');
+    expect(p('Strawberries').icon, 'strawberry');
+    expect(p('Potato').icon, 'potato');
+    expect(const Product('My oat mix', 400).icon, 'rice',
+        reason: 'own: from name');
     expect(s.eatenIn(Meal.lunch), closeTo(before + e.kcal, 0.01));
     expect(s.dishes.length, dishes, reason: 'products are not saved as dishes');
   });

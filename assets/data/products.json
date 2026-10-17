@@ -8,7 +8,8 @@
   "ml": true,
   "p": 0.1,
   "f": 0.2,
-  "c": 1.7
+  "c": 1.7,
+  "icon": "coffee"
  },
  {
   "name": "Turkish coffee (cezve)",
@@ -19,7 +20,8 @@
   "ml": true,
   "p": 0.2,
   "f": 0,
-  "c": 0.7
+  "c": 0.7,
+  "icon": "coffee"
  },
  {
   "name": "Instant coffee (cup)",
@@ -30,7 +32,8 @@
   "ml": true,
   "p": 0.2,
   "f": 0,
-  "c": 0.8
+  "c": 0.8,
+  "icon": "coffee"
  },
  {
   "name": "Instant coffee (powder)",
@@ -41,7 +44,8 @@
   "tsp": 2,
   "p": 12.2,
   "f": 0.5,
-  "c": 75.4
+  "c": 75.4,
+  "icon": "coffee"
  },
  {
   "name": "Brewed coffee (drip, press)",
@@ -52,7 +56,8 @@
   "ml": true,
   "p": 0.1,
   "f": 0,
-  "c": 0.4
+  "c": 0.4,
+  "icon": "coffee"
  },
  {
   "name": "Wheat flour",
@@ -64,7 +69,8 @@
   "tsp": 3,
   "p": 10.3,
   "f": 1.0,
-  "c": 76.3
+  "c": 76.3,
+  "icon": "bread"
  },
  {
   "name": "Whole wheat flour",
@@ -75,7 +81,8 @@
   "tsp": 3,
   "p": 13.2,
   "f": 2.5,
-  "c": 72.0
+  "c": 72.0,
+  "icon": "bread"
  },
  {
   "name": "Butter",
@@ -88,7 +95,8 @@
   "tsp": 5,
   "p": 0.9,
   "f": 81.1,
-  "c": 0.1
+  "c": 0.1,
+  "icon": "butter"
  },
  {
   "name": "Egg",
@@ -117,7 +125,8 @@
     60,
     null
    ]
-  ]
+  ],
+  "icon": "egg"
  },
  {
   "name": "Sugar",
@@ -129,7 +138,8 @@
   "tsp": 5,
   "p": 0,
   "f": 0,
-  "c": 100
+  "c": 100,
+  "icon": "baked"
  },
  {
   "name": "Powdered sugar",
@@ -140,7 +150,8 @@
   "tsp": 4,
   "p": 0,
   "f": 0,
-  "c": 99.8
+  "c": 99.8,
+  "icon": "baked"
  },
  {
   "name": "Vanilla sugar",
@@ -151,7 +162,8 @@
   "tsp": 4,
   "p": 0,
   "f": 0,
-  "c": 98
+  "c": 98,
+  "icon": "baked"
  },
  {
   "name": "Brown sugar",
@@ -163,7 +175,8 @@
   "tsp": 5,
   "p": 0.1,
   "f": 0,
-  "c": 98.1
+  "c": 98.1,
+  "icon": "baked"
  },
  {
   "name": "Dry yeast",
@@ -174,7 +187,8 @@
   "tsp": 3,
   "p": 40.4,
   "f": 7.6,
-  "c": 14.3
+  "c": 14.3,
+  "icon": "baked"
  },
  {
   "name": "Baking powder",
@@ -185,7 +199,8 @@
   "tsp": 4,
   "p": 0,
   "f": 0,
-  "c": 13
+  "c": 13,
+  "icon": "baked"
  },
  {
   "name": "Milk 2%",
@@ -199,7 +214,8 @@
   "tsp": 5,
   "p": 3.3,
   "f": 2.0,
-  "c": 4.8
+  "c": 4.8,
+  "icon": "milk"
  },
  {
   "name": "Milk 3.2%",
@@ -212,7 +228,8 @@
   "tsp": 5,
   "p": 3.2,
   "f": 3.2,
-  "c": 4.7
+  "c": 4.7,
+  "icon": "milk"
  },
  {
   "name": "Cream 33%",
@@ -226,7 +243,8 @@
   "tsp": 5,
   "p": 2.2,
   "f": 33,
-  "c": 4.0
+  "c": 4.0,
+  "icon": "milk"
  },
  {
   "name": "Sour cream 15%",
@@ -239,7 +257,8 @@
   "tsp": 5,
   "p": 2.6,
   "f": 15,
-  "c": 3.6
+  "c": 3.6,
+  "icon": "milk"
  },
  {
   "name": "Cottage cheese 0%",
@@ -250,7 +269,8 @@
   ],
   "p": 19.8,
   "f": 0.5,
-  "c": 3.5
+  "c": 3.5,
+  "icon": "cheese"
  },
  {
   "name": "Cottage cheese 5%",
@@ -261,7 +281,8 @@
   ],
   "p": 17.2,
   "f": 5,
-  "c": 1.8
+  "c": 1.8,
+  "icon": "cheese"
  },
  {
   "name": "Cottage cheese 9%",
@@ -272,7 +293,8 @@
   ],
   "p": 16.7,
   "f": 9,
-  "c": 2
+  "c": 2,
+  "icon": "cheese"
  },
  {
   "name": "Cream cheese",
@@ -283,7 +305,8 @@
   "tsp": 5,
   "p": 6,
   "f": 34,
-  "c": 4
+  "c": 4,
+  "icon": "cheese"
  },
  {
   "name": "Mascarpone",
@@ -294,7 +317,8 @@
   "tsp": 5,
   "p": 4.8,
   "f": 44,
-  "c": 3.6
+  "c": 3.6,
+  "icon": "cheese"
  },
  {
   "name": "Condensed milk",
@@ -306,7 +330,8 @@
   "tsp": 7,
   "p": 7.9,
   "f": 8.7,
-  "c": 54.4
+  "c": 54.4,
+  "icon": "milk"
  },
  {
   "name": "Dark chocolate 70%",
@@ -317,7 +342,8 @@
   ],
   "p": 7.8,
   "f": 42.6,
-  "c": 45.9
+  "c": 45.9,
+  "icon": "chocolate"
  },
  {
   "name": "Milk chocolate",
@@ -328,7 +354,8 @@
   ],
   "p": 7.6,
   "f": 29.7,
-  "c": 59.4
+  "c": 59.4,
+  "icon": "chocolate"
  },
  {
   "name": "Cocoa powder",
@@ -340,7 +367,8 @@
   "tsp": 3,
   "p": 19.6,
   "f": 13.7,
-  "c": 21
+  "c": 21,
+  "icon": "chocolate"
  },
  {
   "name": "Honey",
@@ -352,7 +380,8 @@
   "tsp": 7,
   "p": 0.3,
   "f": 0,
-  "c": 82.4
+  "c": 82.4,
+  "icon": "honey"
  },
  {
   "name": "Jam",
@@ -363,7 +392,8 @@
   "tsp": 7,
   "p": 0.4,
   "f": 0.1,
-  "c": 65
+  "c": 65,
+  "icon": "strawberry"
  },
  {
   "name": "Raisins",
@@ -373,7 +403,8 @@
   ],
   "p": 3.1,
   "f": 0.5,
-  "c": 79.2
+  "c": 79.2,
+  "icon": "nuts"
  },
  {
   "name": "Poppy seeds",
@@ -384,7 +415,8 @@
   "tsp": 3,
   "p": 18,
   "f": 41.6,
-  "c": 28.1
+  "c": 28.1,
+  "icon": "nuts"
  },
  {
   "name": "Walnuts",
@@ -395,7 +427,8 @@
   ],
   "p": 15.2,
   "f": 65.2,
-  "c": 13.7
+  "c": 13.7,
+  "icon": "nuts"
  },
  {
   "name": "Almonds",
@@ -405,7 +438,8 @@
   ],
   "p": 21.2,
   "f": 49.9,
-  "c": 21.6
+  "c": 21.6,
+  "icon": "nuts"
  },
  {
   "name": "Hazelnuts",
@@ -415,7 +449,8 @@
   ],
   "p": 15,
   "f": 60.8,
-  "c": 16.7
+  "c": 16.7,
+  "icon": "nuts"
  },
  {
   "name": "Coconut flakes",
@@ -426,7 +461,8 @@
   "tsp": 2,
   "p": 6.9,
   "f": 64.5,
-  "c": 23.7
+  "c": 23.7,
+  "icon": "coconut"
  },
  {
   "name": "Oat flakes",
@@ -438,7 +474,8 @@
   "tsp": 3,
   "p": 13.2,
   "f": 6.5,
-  "c": 67.7
+  "c": 67.7,
+  "icon": "rice"
  },
  {
   "name": "Semolina",
@@ -450,7 +487,8 @@
   "p": 12.7,
   "f": 1.1,
   "c": 68.9,
-  "tsp": 4
+  "tsp": 4,
+  "icon": "rice"
  },
  {
   "name": "Margarine",
@@ -461,7 +499,8 @@
   "tsp": 5,
   "p": 0.2,
   "f": 80.5,
-  "c": 0.7
+  "c": 0.7,
+  "icon": "butter"
  },
  {
   "name": "Sunflower oil",
@@ -474,7 +513,8 @@
   "tsp": 5,
   "p": 0,
   "f": 100,
-  "c": 0
+  "c": 0,
+  "icon": "olive"
  },
  {
   "name": "Starch",
@@ -486,7 +526,8 @@
   "tsp": 3,
   "p": 0.3,
   "f": 0.1,
-  "c": 91.3
+  "c": 91.3,
+  "icon": "baked"
  },
  {
   "name": "Gelatin",
@@ -497,7 +538,8 @@
   "tsp": 3,
   "p": 85.6,
   "f": 0.1,
-  "c": 0
+  "c": 0,
+  "icon": "baked"
  },
  {
   "name": "Apple",
@@ -525,7 +567,8 @@
     230,
     "8.5 cm"
    ]
-  ]
+  ],
+  "icon": "snack"
  },
  {
   "name": "Banana",
@@ -553,7 +596,8 @@
     150,
     "21 cm"
    ]
-  ]
+  ],
+  "icon": "banana"
  },
  {
   "name": "Strawberries",
@@ -571,7 +615,8 @@
     12,
     null
    ]
-  ]
+  ],
+  "icon": "strawberry"
  },
  {
   "name": "Cherries",
@@ -581,7 +626,8 @@
   ],
   "p": 1.0,
   "f": 0.3,
-  "c": 12.2
+  "c": 12.2,
+  "icon": "cherries"
  },
  {
   "name": "Blueberries",
@@ -592,7 +638,8 @@
   ],
   "p": 0.7,
   "f": 0.3,
-  "c": 14.5
+  "c": 14.5,
+  "icon": "blueberries"
  },
  {
   "name": "Lemon",
@@ -620,7 +667,8 @@
     110,
     "7 cm"
    ]
-  ]
+  ],
+  "icon": "lemon"
  },
  {
   "name": "Water",
@@ -632,7 +680,8 @@
   "ml": true,
   "p": 0,
   "f": 0,
-  "c": 0
+  "c": 0,
+  "icon": "water"
  },
  {
   "name": "Black tea (brewed)",
@@ -643,7 +692,8 @@
   "ml": true,
   "p": 0,
   "f": 0,
-  "c": 0.3
+  "c": 0.3,
+  "icon": "tea"
  },
  {
   "name": "Green tea (brewed)",
@@ -654,7 +704,8 @@
   "ml": true,
   "p": 0.2,
   "f": 0,
-  "c": 0
+  "c": 0,
+  "icon": "tea"
  },
  {
   "name": "Oat milk",
@@ -665,7 +716,8 @@
   "ml": true,
   "p": 1.0,
   "f": 1.5,
-  "c": 6.7
+  "c": 6.7,
+  "icon": "milk"
  },
  {
   "name": "Almond milk",
@@ -676,7 +728,8 @@
   "ml": true,
   "p": 0.6,
   "f": 1.1,
-  "c": 0.6
+  "c": 0.6,
+  "icon": "milk"
  },
  {
   "name": "Coconut milk",
@@ -688,7 +741,8 @@
   "ml": true,
   "p": 2.3,
   "f": 23.8,
-  "c": 5.5
+  "c": 5.5,
+  "icon": "coconut"
  },
  {
   "name": "Syrup (vanilla, caramel)",
@@ -699,7 +753,8 @@
   "tsp": 7,
   "p": 0,
   "f": 0,
-  "c": 80
+  "c": 80,
+  "icon": "honey"
  },
  {
   "name": "Orange juice",
@@ -710,7 +765,8 @@
   "ml": true,
   "p": 0.7,
   "f": 0.2,
-  "c": 10.4
+  "c": 10.4,
+  "icon": "orange"
  },
  {
   "name": "Apple juice",
@@ -721,7 +777,8 @@
   "ml": true,
   "p": 0.1,
   "f": 0.1,
-  "c": 11.3
+  "c": 11.3,
+  "icon": "snack"
  },
  {
   "name": "Kefir 2.5%",
@@ -732,7 +789,8 @@
   "ml": true,
   "p": 3,
   "f": 2.5,
-  "c": 4
+  "c": 4,
+  "icon": "milk"
  },
  {
   "name": "Yogurt natural 2%",
@@ -743,7 +801,8 @@
   ],
   "p": 4.3,
   "f": 2,
-  "c": 6.2
+  "c": 6.2,
+  "icon": "milk"
  },
  {
   "name": "Ice cream",
@@ -753,7 +812,8 @@
   ],
   "p": 3.5,
   "f": 11,
-  "c": 23.6
+  "c": 23.6,
+  "icon": "icecream"
  },
  {
   "name": "Protein powder",
@@ -764,7 +824,8 @@
   "tsp": 5,
   "p": 75,
   "f": 5,
-  "c": 8
+  "c": 8,
+  "icon": "milk"
  },
  {
   "name": "Mint",
@@ -774,7 +835,8 @@
   ],
   "p": 3.3,
   "f": 0.7,
-  "c": 1.6
+  "c": 1.6,
+  "icon": "leafy"
  },
  {
   "name": "Ice",
@@ -784,7 +846,8 @@
   ],
   "p": 0,
   "f": 0,
-  "c": 0
+  "c": 0,
+  "icon": "water"
  },
  {
   "name": "Potato",
@@ -812,7 +875,8 @@
     250,
     "9 cm"
    ]
-  ]
+  ],
+  "icon": "potato"
  },
  {
   "name": "Carrot",
@@ -840,7 +904,8 @@
     100,
     "22 cm"
    ]
-  ]
+  ],
+  "icon": "carrot"
  },
  {
   "name": "Onion",
@@ -868,7 +933,8 @@
     160,
     "8 cm"
    ]
-  ]
+  ],
+  "icon": "onion"
  },
  {
   "name": "Beetroot",
@@ -895,7 +961,8 @@
     250,
     "9 cm"
    ]
-  ]
+  ],
+  "icon": "salad"
  },
  {
   "name": "Cabbage",
@@ -906,7 +973,8 @@
   ],
   "p": 1.3,
   "f": 0.1,
-  "c": 3.3
+  "c": 3.3,
+  "icon": "leafy"
  },
  {
   "name": "Tomato",
@@ -934,7 +1002,8 @@
     180,
     "8 cm"
    ]
-  ]
+  ],
+  "icon": "tomato"
  },
  {
   "name": "Tomato paste",
@@ -946,7 +1015,8 @@
   "tsp": 6,
   "p": 4.3,
   "f": 0.5,
-  "c": 14.8
+  "c": 14.8,
+  "icon": "tomato"
  },
  {
   "name": "Bell pepper",
@@ -974,7 +1044,8 @@
     200,
     null
    ]
-  ]
+  ],
+  "icon": "pepper"
  },
  {
   "name": "Garlic",
@@ -992,7 +1063,8 @@
     5,
     null
    ]
-  ]
+  ],
+  "icon": "garlic"
  },
  {
   "name": "Celery",
@@ -1002,7 +1074,8 @@
   ],
   "p": 0.7,
   "f": 0.2,
-  "c": 3.0
+  "c": 3.0,
+  "icon": "leafy"
  },
  {
   "name": "Zucchini",
@@ -1030,7 +1103,8 @@
     300,
     "25 cm"
    ]
-  ]
+  ],
+  "icon": "cucumber"
  },
  {
   "name": "Mushrooms",
@@ -1041,7 +1115,8 @@
   ],
   "p": 3.1,
   "f": 0.3,
-  "c": 2.3
+  "c": 2.3,
+  "icon": "mushroom"
  },
  {
   "name": "Dill / parsley",
@@ -1052,7 +1127,8 @@
   ],
   "p": 3.0,
   "f": 0.8,
-  "c": 3.0
+  "c": 3.0,
+  "icon": "leafy"
  },
  {
   "name": "Bay leaf",
@@ -1062,7 +1138,8 @@
   ],
   "p": 7.6,
   "f": 8.4,
-  "c": 49
+  "c": 49,
+  "icon": "leafy"
  },
  {
   "name": "Lentils (dry)",
@@ -1073,7 +1150,8 @@
   ],
   "p": 24.6,
   "f": 1.1,
-  "c": 63.4
+  "c": 63.4,
+  "icon": "salad"
  },
  {
   "name": "Beans (canned)",
@@ -1084,7 +1162,8 @@
   ],
   "p": 6,
   "f": 0.4,
-  "c": 16
+  "c": 16,
+  "icon": "salad"
  },
  {
   "name": "Peas (frozen)",
@@ -1095,7 +1174,8 @@
   ],
   "p": 5.4,
   "f": 0.4,
-  "c": 14.5
+  "c": 14.5,
+  "icon": "salad"
  },
  {
   "name": "Noodles (dry)",
@@ -1105,7 +1185,8 @@
   ],
   "p": 13,
   "f": 1.5,
-  "c": 75
+  "c": 75,
+  "icon": "spaghetti"
  },
  {
   "name": "Shrimp",
@@ -1116,7 +1197,8 @@
   ],
   "p": 20.1,
   "f": 0.5,
-  "c": 0
+  "c": 0,
+  "icon": "shrimp"
  },
  {
   "name": "Salt",
@@ -1128,7 +1210,8 @@
   "tsp": 6,
   "p": 0,
   "f": 0,
-  "c": 0
+  "c": 0,
+  "icon": "salt"
  },
  {
   "name": "Chicken breast",
@@ -1156,7 +1239,8 @@
     250,
     null
    ]
-  ]
+  ],
+  "icon": "chicken"
  },
  {
   "name": "Chicken thigh",
@@ -1167,7 +1251,8 @@
   ],
   "p": 18,
   "f": 11,
-  "c": 0
+  "c": 0,
+  "icon": "chicken"
  },
  {
   "name": "Whole chicken",
@@ -1178,7 +1263,8 @@
   ],
   "p": 18.6,
   "f": 15.1,
-  "c": 0
+  "c": 0,
+  "icon": "chicken"
  },
  {
   "name": "Beef",
@@ -1189,7 +1275,8 @@
   ],
   "p": 18,
   "f": 19.5,
-  "c": 0
+  "c": 0,
+  "icon": "meat"
  },
  {
   "name": "Pork",
@@ -1200,7 +1287,8 @@
   ],
   "p": 16,
   "f": 20,
-  "c": 0
+  "c": 0,
+  "icon": "meat"
  },
  {
   "name": "Veal",
@@ -1211,7 +1299,8 @@
   ],
   "p": 19.4,
   "f": 10,
-  "c": 0
+  "c": 0,
+  "icon": "meat"
  },
  {
   "name": "Minced meat (pork+beef)",
@@ -1221,7 +1310,8 @@
   ],
   "p": 17,
   "f": 21.5,
-  "c": 0
+  "c": 0,
+  "icon": "meat"
  },
  {
   "name": "Turkey",
@@ -1231,7 +1321,8 @@
   ],
   "p": 19.5,
   "f": 6,
-  "c": 0
+  "c": 0,
+  "icon": "chicken"
  },
  {
   "name": "Salmon",
@@ -1242,7 +1333,8 @@
   ],
   "p": 20.4,
   "f": 13.4,
-  "c": 0
+  "c": 0,
+  "icon": "fish"
  },
  {
   "name": "Cod",
@@ -1253,7 +1345,8 @@
   ],
   "p": 17.8,
   "f": 0.7,
-  "c": 0
+  "c": 0,
+  "icon": "fish"
  },
  {
   "name": "Rice (dry)",
@@ -1264,7 +1357,8 @@
   ],
   "p": 6.7,
   "f": 0.6,
-  "c": 79.3
+  "c": 79.3,
+  "icon": "rice"
  },
  {
   "name": "Buckwheat (dry)",
@@ -1274,7 +1368,8 @@
   ],
   "p": 13.3,
   "f": 3.4,
-  "c": 71.5
+  "c": 71.5,
+  "icon": "rice"
  },
  {
   "name": "Pasta (dry)",
@@ -1284,7 +1379,8 @@
   ],
   "p": 13,
   "f": 1.5,
-  "c": 74.7
+  "c": 74.7,
+  "icon": "spaghetti"
  },
  {
   "name": "Bulgur (dry)",
@@ -1294,7 +1390,8 @@
   ],
   "p": 12.3,
   "f": 1.3,
-  "c": 75.9
+  "c": 75.9,
+  "icon": "rice"
  },
  {
   "name": "Hard cheese",
@@ -1305,7 +1402,8 @@
   ],
   "p": 25,
   "f": 33,
-  "c": 1.3
+  "c": 1.3,
+  "icon": "cheese"
  },
  {
   "name": "Mozzarella",
@@ -1315,7 +1413,8 @@
   ],
   "p": 22,
   "f": 21,
-  "c": 2.2
+  "c": 2.2,
+  "icon": "cheese"
  },
  {
   "name": "Olive oil",
@@ -1326,7 +1425,8 @@
   "tsp": 5,
   "p": 0,
   "f": 100,
-  "c": 0
+  "c": 0,
+  "icon": "olive"
  },
  {
   "name": "Cucumber",
@@ -1353,7 +1453,8 @@
     200,
     "25 cm"
    ]
-  ]
+  ],
+  "icon": "cucumber"
  },
  {
   "name": "Avocado",
@@ -1380,7 +1481,8 @@
     180,
     null
    ]
-  ]
+  ],
+  "icon": "avocado"
  },
  {
   "name": "Broccoli",
@@ -1391,7 +1493,8 @@
   ],
   "p": 2.8,
   "f": 0.4,
-  "c": 4.0
+  "c": 4.0,
+  "icon": "broccoli"
  },
  {
   "name": "Spinach",
@@ -1402,7 +1505,8 @@
   ],
   "p": 2.9,
   "f": 0.4,
-  "c": 1.4
+  "c": 1.4,
+  "icon": "leafy"
  },
  {
   "name": "Bread",
@@ -1419,7 +1523,8 @@
     30,
     null
    ]
-  ]
+  ],
+  "icon": "bread"
  },
  {
   "name": "Quail egg",
@@ -1437,7 +1542,8 @@
     10,
     null
    ]
-  ]
+  ],
+  "icon": "egg"
  },
  {
   "name": "Orange",
@@ -1465,7 +1571,8 @@
     190,
     "8.5 cm"
    ]
-  ]
+  ],
+  "icon": "orange"
  },
  {
   "name": "Peach",
@@ -1493,7 +1600,8 @@
     200,
     "8 cm"
    ]
-  ]
+  ],
+  "icon": "peach"
  },
  {
   "name": "Pear",
@@ -1521,7 +1629,8 @@
     230,
     null
    ]
-  ]
+  ],
+  "icon": "pear"
  },
  {
   "name": "Kiwi",
@@ -1548,6 +1657,7 @@
     90,
     null
    ]
-  ]
+  ],
+  "icon": "kiwi"
  }
 ]

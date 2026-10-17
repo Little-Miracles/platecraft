@@ -245,9 +245,11 @@ class _DishBuilderScreenState extends State<DishBuilderScreen>
       padding: const EdgeInsets.only(bottom: 8),
       child: Container(
         decoration: PC.card(border: PC.gold.withOpacity(0.3)),
-        padding: const EdgeInsets.fromLTRB(14, 6, 4, 6),
+        padding: const EdgeInsets.fromLTRB(8, 6, 4, 6),
         child: Row(
           children: [
+            IconOnBlack(_productFor(it).icon, size: 36),
+            const SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -506,6 +508,7 @@ class _ProductPickerState extends State<_ProductPicker>
                   final p = row as Product;
                   return ListTile(
                     dense: true,
+                    leading: IconOnBlack(p.icon, size: 36),
                     title: Text(p.name, style: PC.body(15)),
                     trailing: Text('${fmt(p.kcalPer100)} kcal/100 ${p.unit}',
                         style: PC.body(13, color: PC.goldLight)),

@@ -129,7 +129,23 @@ const allDishIcons = [
   'bubble_tea',
   'smoothie',
   'water',
+  'coffee',
   'snack',
+  'strawberry',
+  'cherries',
+  'banana',
+  'orange',
+  'lemon',
+  'peach',
+  'pear',
+  'kiwi',
+  'blueberries',
+  'avocado',
+  'tomato',
+  'cheese',
+  'chocolate',
+  'icecream',
+  'honey',
 ];
 
 class Activity {
@@ -232,7 +248,8 @@ class Product {
       this.categories = const [],
       this.liquid = false,
       this.tspGrams,
-      this.pieces = const []});
+      this.pieces = const [],
+      this.picture});
   final String name;
   final double kcalPer100;
 
@@ -251,6 +268,9 @@ class Product {
   /// Sizes of one piece (egg, apple, potato…), edible weight.
   final List<Piece> pieces;
 
+  /// Its own picture from the table (strawberry, cheese…), if it has one.
+  final String? picture;
+
   String get unit => liquid ? 'ml' : 'g';
 
   /// Sections this product is typical for: baked, drinks, soups, mains.
@@ -258,8 +278,10 @@ class Product {
 
   bool isFor(Category c) => categories.contains(c.name);
 
-  /// A picture for a product eaten as it is (sour cream, an apple…).
+  /// A picture for a product eaten as it is (sour cream, an apple…):
+  /// its own from the table, or a guess from the name for your own products.
   String get icon {
+    if (picture != null) return picture!;
     final n = name.toLowerCase();
     for (final (words, icon) in const [
       (['egg'], 'egg'),
@@ -314,7 +336,8 @@ class Product {
           pieces: [
             for (final p in (j['pcs'] as List?) ?? const [])
               Piece.fromJson(p as List)
-          ]);
+          ],
+          picture: j['icon'] as String?);
 }
 
 double _num(Object? v) => (v as num?)?.toDouble() ?? 0;
