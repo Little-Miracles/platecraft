@@ -61,6 +61,20 @@ void main() {
     expect(s.eatenDay, greaterThan(0));
   });
 
+  test('a product eaten as it is goes straight into the meal', () {
+    final s = AppState.instance;
+    final cream =
+        s.builtInProducts.firstWhere((x) => x.name == 'Sour cream 15%');
+    final before = s.eatenIn(Meal.lunch);
+    final dishes = s.dishes.length;
+    final e = s.addProductEntry(Meal.lunch, cream, cream.tspGrams! * 3 * 2);
+    expect(e.kcal, closeTo(e.grams * 162 / 100, 0.01));
+    expect(e.fat, greaterThan(0));
+    expect(e.icon, 'milk');
+    expect(s.eatenIn(Meal.lunch), closeTo(before + e.kcal, 0.01));
+    expect(s.dishes.length, dishes, reason: 'products are not saved as dishes');
+  });
+
   test('countable products have sizes to pick by eye', () {
     final egg =
         AppState.instance.builtInProducts.firstWhere((x) => x.name == 'Egg');

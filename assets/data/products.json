@@ -242,6 +242,17 @@
   "c": 3.6
  },
  {
+  "name": "Cottage cheese 0%",
+  "kcal": 99,
+  "for": [
+   "baked",
+   "mains"
+  ],
+  "p": 19.8,
+  "f": 0.5,
+  "c": 3.5
+ },
+ {
   "name": "Cottage cheese 5%",
   "kcal": 121,
   "for": [
@@ -251,6 +262,17 @@
   "p": 17.2,
   "f": 5,
   "c": 1.8
+ },
+ {
+  "name": "Cottage cheese 9%",
+  "kcal": 159,
+  "for": [
+   "baked",
+   "mains"
+  ],
+  "p": 16.7,
+  "f": 9,
+  "c": 2
  },
  {
   "name": "Cream cheese",
@@ -417,6 +439,18 @@
   "p": 13.2,
   "f": 6.5,
   "c": 67.7
+ },
+ {
+  "name": "Semolina",
+  "kcal": 360,
+  "for": [
+   "baked",
+   "mains"
+  ],
+  "p": 12.7,
+  "f": 1.1,
+  "c": 68.9,
+  "tsp": 4
  },
  {
   "name": "Margarine",

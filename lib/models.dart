@@ -240,6 +240,31 @@ class Product {
 
   bool isFor(Category c) => categories.contains(c.name);
 
+  /// A picture for a product eaten as it is (sour cream, an apple…).
+  String get icon {
+    final n = name.toLowerCase();
+    for (final (words, icon) in const [
+      (['egg'], 'egg'),
+      (['bread'], 'bread'),
+      (['salmon', 'cod'], 'fish'),
+      (['shrimp'], 'shrimp'),
+      (['chicken', 'turkey'], 'chicken'),
+      (['beef', 'pork', 'veal', 'minced'], 'meat'),
+      (['rice', 'buckwheat', 'bulgur', 'oat', 'semolina'], 'rice'),
+      (['pasta', 'noodles'], 'spaghetti'),
+      (['tea'], 'tea'),
+      (['coffee', 'juice'], 'drinks'),
+      (
+        ['milk', 'kefir', 'yogurt', 'cream', 'cheese', 'mascarpone', 'butter'],
+        'milk'
+      ),
+      (['chocolate', 'cookie', 'jam', 'honey', 'ice cream'], 'snack'),
+    ]) {
+      if (words.any(n.contains)) return icon;
+    }
+    return 'salad';
+  }
+
   Map<String, dynamic> toJson() =>
       {'name': name, 'kcal': kcalPer100, 'p': protein, 'f': fat, 'c': carbs};
 

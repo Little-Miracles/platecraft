@@ -150,6 +150,26 @@ class AppState extends ChangeNotifier {
     return e;
   }
 
+  /// A product eaten as it is — sour cream to the borscht, an apple.
+  Entry addProductEntry(Meal meal, Product p, double grams) {
+    final e = Entry(
+      id: newId(),
+      date: day,
+      meal: meal,
+      name: p.name,
+      icon: p.icon,
+      grams: grams,
+      kcal: grams * p.kcalPer100 / 100,
+      protein: grams * p.protein / 100,
+      fat: grams * p.fat / 100,
+      carbs: grams * p.carbs / 100,
+      unit: p.unit,
+    );
+    entries.add(e);
+    _save('entries', entries.map((x) => x.toJson()).toList());
+    return e;
+  }
+
   void removeEntry(Entry e) {
     entries.removeWhere((x) => x.id == e.id);
     _save('entries', entries.map((x) => x.toJson()).toList());

@@ -172,9 +172,16 @@ class OutlineButtonPC extends StatelessWidget {
         child: OutlinedButton.icon(
           onPressed: onPressed,
           icon: Icon(icon ?? Icons.add, color: PC.gold, size: 20),
-          label: Text(label,
-              style: PC.body(15, color: PC.gold, weight: FontWeight.w600)),
+          // Shrinks instead of overflowing: three in a row, long German words.
+          label: Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(label,
+                  style: PC.body(15, color: PC.gold, weight: FontWeight.w600)),
+            ),
+          ),
           style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             side: BorderSide(color: PC.gold.withOpacity(0.7)),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

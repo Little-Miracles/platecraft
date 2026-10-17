@@ -267,9 +267,10 @@ class _DishCard extends StatelessWidget {
   }
 }
 
-/// A meal of the selected day: what was eaten. ➕ makes a new dish
-/// (homemade or ready-made) — it's saved to Saved dishes and its portion
-/// lands here; a dish made before is picked from Saved dishes.
+/// A meal of the selected day: what was eaten. Three ways to add:
+/// Product — a food eaten as it is (sour cream, an apple), straight in;
+/// Ready-made / Homemade — a new dish, saved to Saved dishes, portion here.
+/// A dish made before is picked from Saved dishes.
 class MealScreen extends StatelessWidget {
   const MealScreen({super.key, required this.meal});
   final Meal meal;
@@ -277,6 +278,18 @@ class MealScreen extends StatelessWidget {
   Category get _usual => meal == Meal.breakfast || meal == Meal.snack
       ? Category.drinks
       : Category.mains;
+
+  Future<void> _addProduct(BuildContext context) async {
+    final p = await pickProduct(context, _usual);
+    if (p == null) return;
+    if (!context.mounted) return;
+    final g = await askAmount(context, p, label: 'How much?');
+    if (g == null) return;
+    if (!context.mounted) return;
+    final e = AppState.instance.addProductEntry(meal, p, g);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Added ${e.kcal.round()} kcal to ${meal.label}')));
+  }
 
   Future<void> _create(BuildContext context, Widget screen) async {
     final dish = await Navigator.push<Dish>(
@@ -314,12 +327,18 @@ class MealScreen extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
+                    child: OutlineButtonPC('Product',
+                        icon: Icons.egg_outlined,
+                        onPressed: () => _addProduct(context)),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
                     child: OutlineButtonPC('Ready-made',
                         icon: Icons.shopping_bag_outlined,
                         onPressed: () => _create(
                             context, ReadyMadeScreen(category: _usual))),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: OutlineButtonPC('Homemade',
                         icon: Icons.soup_kitchen_outlined,

@@ -79,86 +79,12 @@ class _DishBuilderScreenState extends State<DishBuilderScreen>
   double? get _per100 => _per((i) => i.kcal);
 
   Future<void> _addIngredient() async {
-    final product = await showModalBottomSheet<Product>(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => _ProductPicker(category: _category),
-    );
-    if (product == null || !mounted) return;
-    final grams = await _askGrams(product);
+    final product = await pickProduct(context, _category);
+    if (product == null) return;
+    if (!mounted) return;
+    final grams = await askAmount(context, product);
     if (grams == null) return;
     setState(() => _items.add(Ingredient.of(product, grams)));
-  }
-
-  Future<double?> _askGrams(Product p, {double? initial}) {
-    final c = TextEditingController(text: initial == null ? '' : fmt(initial));
-    final tsp = p.tspGrams;
-    void addSpoon(double g) {
-      final now = parseNum(c.text) ?? 0;
-      c.text = fmt(now + g);
-    }
-
-    return showDialog<double>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(p.name, style: PC.title(24)),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            NumberField(
-                controller: c,
-                label: 'How much went in?',
-                suffix: p.unit,
-                autofocus: true),
-            if (p.pieces.isNotEmpty) ...[
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  for (final piece in p.pieces)
-                    ActionChip(
-                      label: Text(piece.hint == null
-                          ? '+1 ${piece.label.toLowerCase()} (${fmt(piece.grams)} g)'
-                          : '+1 ${piece.label.toLowerCase()} · ${piece.hint} (${fmt(piece.grams)} g)'),
-                      onPressed: () => addSpoon(piece.grams),
-                    ),
-                ],
-              ),
-            ],
-            if (tsp != null) ...[
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  ActionChip(
-                    label: Text('+1 tsp (${fmt(tsp)} ${p.unit})'),
-                    onPressed: () => addSpoon(tsp),
-                  ),
-                  ActionChip(
-                    label: Text('+1 tbsp (${fmt(tsp * 3)} ${p.unit})'),
-                    onPressed: () => addSpoon(tsp * 3),
-                  ),
-                ],
-              ),
-            ],
-          ],
-        ),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          FilledButton(
-            onPressed: () {
-              final g = parseNum(c.text);
-              if (g != null && g > 0) Navigator.pop(ctx, g);
-            },
-            child: const Text('Add'),
-          ),
-        ],
-      ),
-    );
   }
 
   void _save() {
@@ -334,7 +260,8 @@ class _DishBuilderScreenState extends State<DishBuilderScreen>
             ),
             TextButton(
               onPressed: () async {
-                final g = await _askGrams(_productFor(it), initial: it.grams);
+                final g = await askAmount(context, _productFor(it),
+                    initial: it.grams);
                 if (g != null) {
                   setState(() => it.grams = g);
                 }
@@ -358,6 +285,85 @@ class _DishBuilderScreenState extends State<DishBuilderScreen>
     );
   }
 }
+
+/// "How much?" for one product: grams or ml, or spoons / pieces by eye
+/// (+1 tsp, +1 medium egg). Used by the dish builder and by Product on a meal.
+Future<double?> askAmount(BuildContext context, Product p,
+    {double? initial, String label = 'How much went in?'}) {
+  final c = TextEditingController(text: initial == null ? '' : fmt(initial));
+  final tsp = p.tspGrams;
+  void addSpoon(double g) {
+    final now = parseNum(c.text) ?? 0;
+    c.text = fmt(now + g);
+  }
+
+  return showDialog<double>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: Text(p.name, style: PC.title(24)),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          NumberField(
+              controller: c, label: label, suffix: p.unit, autofocus: true),
+          if (p.pieces.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final piece in p.pieces)
+                  ActionChip(
+                    label: Text(piece.hint == null
+                        ? '+1 ${piece.label.toLowerCase()} (${fmt(piece.grams)} g)'
+                        : '+1 ${piece.label.toLowerCase()} · ${piece.hint} (${fmt(piece.grams)} g)'),
+                    onPressed: () => addSpoon(piece.grams),
+                  ),
+              ],
+            ),
+          ],
+          if (tsp != null) ...[
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                ActionChip(
+                  label: Text('+1 tsp (${fmt(tsp)} ${p.unit})'),
+                  onPressed: () => addSpoon(tsp),
+                ),
+                ActionChip(
+                  label: Text('+1 tbsp (${fmt(tsp * 3)} ${p.unit})'),
+                  onPressed: () => addSpoon(tsp * 3),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+        FilledButton(
+          onPressed: () {
+            final g = parseNum(c.text);
+            if (g != null && g > 0) Navigator.pop(ctx, g);
+          },
+          child: const Text('Add'),
+        ),
+      ],
+    ),
+  );
+}
+
+/// Opens the product list (search in your language, or add your own).
+Future<Product?> pickProduct(BuildContext context, Category category) =>
+    showModalBottomSheet<Product>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => _ProductPicker(category: category),
+    );
 
 /// Search the built-in table + own products, or add your own.
 class _ProductPicker extends StatefulWidget {
