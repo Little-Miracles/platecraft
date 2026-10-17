@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
 
 import '../models.dart';
 import '../state.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import '../tr_text.dart';
+import '../translation.dart';
 
 /// Homemade dish: ingredients in grams + how it's cooked → the finished
 /// weight (estimated, or weighed) → exact kcal per 100 g. Saved to Saved dishes.
@@ -16,7 +18,8 @@ class DishBuilderScreen extends StatefulWidget {
   State<DishBuilderScreen> createState() => _DishBuilderScreenState();
 }
 
-class _DishBuilderScreenState extends State<DishBuilderScreen> {
+class _DishBuilderScreenState extends State<DishBuilderScreen>
+    with RebuildOnTranslation {
   final _name = TextEditingController();
 
   /// The cook's own weight of the finished dish — optional.
@@ -190,7 +193,7 @@ class _DishBuilderScreenState extends State<DishBuilderScreen> {
             textCapitalization: TextCapitalization.sentences,
             onChanged: (_) => setState(() {}),
             decoration:
-                const InputDecoration(labelText: 'Dish name — e.g. My borscht'),
+                InputDecoration(labelText: t('Dish name — e.g. My borscht')),
           ),
           const SizedBox(height: 14),
           Text('Icon', style: PC.body(14, color: PC.textSoft)),
@@ -349,8 +352,29 @@ class _ProductPicker extends StatefulWidget {
   State<_ProductPicker> createState() => _ProductPickerState();
 }
 
-class _ProductPickerState extends State<_ProductPicker> {
+class _ProductPickerState extends State<_ProductPicker>
+    with RebuildOnTranslation {
   String _q = '';
+
+  /// The search in English — typed in Ukrainian, German or French it is
+  /// translated first, so "буряк" finds Beetroot.
+  String _qEn = '';
+
+  Future<void> _search(String v) async {
+    setState(() => _q = v.trim());
+    final en = await TranslationService.instance.toEnglish(_q);
+    if (mounted && v.trim() == _q) setState(() => _qEn = en.toLowerCase());
+  }
+
+  bool _matches(Product p) {
+    if (_q.isEmpty) return true;
+    final name = p.name.toLowerCase();
+    final shown = t(p.name).toLowerCase();
+    final q = _q.toLowerCase();
+    return name.contains(q) ||
+        shown.contains(q) ||
+        (_qEn.isNotEmpty && name.contains(_qEn));
+  }
 
   Future<void> _addOwn() async {
     final name = TextEditingController(text: _q);
@@ -368,7 +392,7 @@ class _ProductPickerState extends State<_ProductPicker> {
             TextField(
                 controller: name,
                 autofocus: true,
-                decoration: const InputDecoration(labelText: 'Name')),
+                decoration: InputDecoration(labelText: t('Name'))),
             const SizedBox(height: 10),
             NumberField(
                 controller: kcal, label: 'kcal per 100 g (from the package)'),
@@ -404,8 +428,7 @@ class _ProductPickerState extends State<_ProductPicker> {
   @override
   Widget build(BuildContext context) {
     final c = widget.category;
-    final all = AppState.instance.allProducts.where(
-        (p) => _q.isEmpty || p.name.toLowerCase().contains(_q.toLowerCase()));
+    final all = AppState.instance.allProducts.where(_matches);
     // My own products first, then this section's typical ones, then the rest.
     final own = all.where((p) => p.own).toList();
     final typical = all.where((p) => !p.own && p.isFor(c)).toList();
@@ -430,9 +453,10 @@ class _ProductPickerState extends State<_ProductPicker> {
             const SizedBox(height: 10),
             TextField(
               autofocus: true,
-              onChanged: (v) => setState(() => _q = v.trim()),
-              decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search), labelText: 'Search products'),
+              onChanged: _search,
+              decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.search),
+                  labelText: t('Search products')),
             ),
             const SizedBox(height: 8),
             Align(

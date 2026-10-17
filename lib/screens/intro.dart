@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import 'package:flutter/material.dart' as m show Text;
 
 import '../state.dart';
 import '../theme.dart';
 import 'calculator.dart';
 import 'start_home.dart';
+import '../tr_text.dart';
+import '../translation.dart';
 
 /// Between Start and Home: a typewriter line invites you to find your daily
 /// goal, then a golden calculator appears and gently wiggles — tap it.
@@ -45,8 +48,16 @@ class _IntroScreenState extends State<IntroScreen> {
     super.dispose();
   }
 
-  /// Types [text] letter by letter; repeats [passes] times, the last one stays.
+  /// Translates [text] into the chosen language first, then types it.
   void _type(String text, {int passes = 1, VoidCallback? onDone}) {
+    _timer?.cancel();
+    TranslationService.instance.translate(text).then((line) {
+      if (mounted) _typeNow(line, passes: passes, onDone: onDone);
+    });
+  }
+
+  /// Types [text] letter by letter; repeats [passes] times, the last one stays.
+  void _typeNow(String text, {int passes = 1, VoidCallback? onDone}) {
     _timer?.cancel();
     _full = text;
     _passes = passes;
@@ -62,7 +73,7 @@ class _IntroScreenState extends State<IntroScreen> {
         Future.delayed(const Duration(milliseconds: 900), () {
           if (!mounted) return;
           setState(() => _shown = '');
-          _type(_full, passes: _passes, onDone: onDone);
+          _typeNow(_full, passes: _passes, onDone: onDone);
         });
       } else {
         setState(() => _calcVisible = true);
@@ -113,7 +124,7 @@ class _IntroScreenState extends State<IntroScreen> {
                     const SizedBox(height: 56),
                     SizedBox(
                       height: 132,
-                      child: Text.rich(
+                      child: m.Text.rich(
                         TextSpan(children: [
                           TextSpan(text: _shown),
                           if (_shown.length < _full.length)

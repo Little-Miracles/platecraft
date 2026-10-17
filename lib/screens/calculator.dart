@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
 
 import '../models.dart';
 import '../state.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import '../tr_text.dart';
 
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({super.key});

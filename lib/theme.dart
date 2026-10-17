@@ -84,7 +84,12 @@ class PC {
   /// Logo lettering (Marcellus has one weight, so [weight] only hints intent).
   static TextStyle logo(double size,
           {Color color = craft, FontWeight? weight}) =>
-      GoogleFonts.marcellus(fontSize: size, color: color, letterSpacing: 0.3);
+      GoogleFonts.marcellus(fontSize: size, color: color, letterSpacing: 0.3)
+          // Marcellus has no Cyrillic: Ukrainian letters come from Forum,
+          // a classical serif of the same family look.
+          .copyWith(fontFamilyFallback: [_cyrillicSerif]);
+
+  static final _cyrillicSerif = GoogleFonts.forum().fontFamily!;
 
   static TextStyle body(double size,
           {Color color = text, FontWeight weight = FontWeight.w500}) =>

@@ -1,11 +1,14 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import 'package:flutter/material.dart' as m show Text;
 import 'package:flutter/services.dart';
 
 import 'models.dart';
 import 'state.dart';
 import 'theme.dart';
+import 'tr_text.dart';
+import 'translation.dart';
 
 /// A 3D icon from assets/icons/.
 class Icon3D extends StatelessWidget {
@@ -582,7 +585,12 @@ class NumberField extends StatelessWidget {
   final bool autofocus;
 
   @override
-  Widget build(BuildContext context) => TextField(
+  Widget build(BuildContext context) => ValueListenableBuilder<int>(
+        valueListenable: TranslationService.instance.revision,
+        builder: (context, _, __) => _field(),
+      );
+
+  Widget _field() => TextField(
         controller: controller,
         autofocus: autofocus,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -591,7 +599,9 @@ class NumberField extends StatelessWidget {
         ],
         style: PC.body(17),
         onChanged: onChanged,
-        decoration: InputDecoration(labelText: label, suffixText: suffix),
+        decoration: InputDecoration(
+            labelText: t(label),
+            suffixText: suffix == null ? null : t(suffix!)),
       );
 }
 
@@ -817,7 +827,7 @@ class PlateCraftWordmark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text.rich(
+    return m.Text.rich(
       TextSpan(children: [
         TextSpan(
           text: 'Plate',

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
 
 import '../state.dart';
 import '../theme.dart';
@@ -6,6 +6,7 @@ import '../widgets.dart';
 import 'calculator.dart';
 import 'day_kitchen.dart';
 import 'intro.dart';
+import '../tr_text.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -17,6 +18,10 @@ class StartScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 28),
         child: Column(
           children: [
+            const Align(
+              alignment: Alignment.topRight,
+              child: LanguageButton(color: PC.antiqueLight),
+            ),
             const Spacer(),
             ClipRRect(
               borderRadius: BorderRadius.circular(28),
@@ -158,7 +163,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const LanguageButton(size: 24, color: PC.logoGold),
                   if (p != null)
                     GestureDetector(
                       onTap: avatarTappable

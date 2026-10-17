@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
 
 import '../models.dart';
 import '../state.dart';
 import '../theme.dart';
 import '../widgets.dart';
 import 'meals.dart';
+import '../tr_text.dart';
 
 const mealIcons = {
   Meal.breakfast: Icons.wb_twilight,

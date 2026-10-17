@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
 
 import '../models.dart';
 import '../state.dart';
 import '../theme.dart';
 import '../widgets.dart';
+import '../tr_text.dart';
+import '../translation.dart';
 
 /// Ready-made food: a bought cupcake, a cup of café coffee — counted either
 /// per 100 g/ml (from the package) or per serving ("1 cupcake = 250 kcal").
@@ -16,7 +18,8 @@ class ReadyMadeScreen extends StatefulWidget {
   State<ReadyMadeScreen> createState() => _ReadyMadeScreenState();
 }
 
-class _ReadyMadeScreenState extends State<ReadyMadeScreen> {
+class _ReadyMadeScreenState extends State<ReadyMadeScreen>
+    with RebuildOnTranslation {
   final _name = TextEditingController();
   final _kcal = TextEditingController();
   final _protein = TextEditingController();
@@ -99,9 +102,9 @@ class _ReadyMadeScreenState extends State<ReadyMadeScreen> {
             textCapitalization: TextCapitalization.sentences,
             onChanged: (_) => setState(() {}),
             decoration: InputDecoration(
-                labelText: _category == Category.drinks
+                labelText: t(_category == Category.drinks
                     ? 'Name — e.g. Café cappuccino'
-                    : 'Name — e.g. Bakery cupcake'),
+                    : 'Name — e.g. Bakery cupcake')),
           ),
           const SizedBox(height: 16),
           Text('How is it counted?', style: PC.body(14, color: PC.textSoft)),

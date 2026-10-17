@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart' hide Text;
+import 'package:flutter/material.dart' hide Text;
 
 import '../models.dart';
 import '../state.dart';
@@ -7,6 +7,8 @@ import '../theme.dart';
 import '../widgets.dart';
 import 'dish_builder.dart';
 import 'ready_made.dart';
+import '../tr_text.dart';
+import '../translation.dart';
 
 /// Saved dishes — everything you've made once, by section.
 /// Nothing is created here: dishes are made from a meal (➕) and land here
@@ -245,13 +247,13 @@ class _DishCard extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                  tooltip: 'Edit',
+                  tooltip: t('Edit'),
                   icon: const Icon(Icons.edit_outlined,
                       size: 20, color: PC.textSoft),
                   onPressed: onEdit,
                 ),
                 IconButton(
-                  tooltip: 'Delete',
+                  tooltip: t('Delete'),
                   icon: const Icon(Icons.delete_outline,
                       size: 20, color: PC.textSoft),
                   onPressed: onDelete,
