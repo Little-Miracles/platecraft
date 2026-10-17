@@ -175,6 +175,41 @@ class AppState extends ChangeNotifier {
     _save('entries', entries.map((x) => x.toJson()).toList());
   }
 
+  // ---- Evening summary ----
+  /// From 20:30 the day is summed up on home.
+  static const summaryHour = 20, summaryMinute = 30;
+
+  /// The day the caring card talks about: today after 20:30, otherwise the
+  /// last day with meals — even if the app wasn't opened for a few days.
+  /// Hidden once the person closes it.
+  DaySummary? summary([DateTime? clock]) {
+    final now = clock ?? DateTime.now();
+    final p = profile;
+    if (p == null) return null;
+    final today = key(now);
+    final evening = now.hour > summaryHour ||
+        (now.hour == summaryHour && now.minute >= summaryMinute);
+    final days = entries.map((e) => e.date).toSet().toList()..sort();
+    final logged =
+        days.where((d) => d.compareTo(today) < 0 || (d == today && evening));
+    if (logged.isEmpty) return null;
+    final d = logged.last;
+    if (_prefs.getString('summaryClosed') == d) return null;
+    return DaySummary(
+      date: DateTime.parse(d),
+      eaten: entries.where((e) => e.date == d).fold(0, (s, e) => s + e.kcal),
+      target: p.targetKcal,
+      water: waterByDate[d] ?? 0,
+      waterGoal: p.waterMl,
+      goal: p.goal,
+    );
+  }
+
+  void closeSummary(DaySummary s) {
+    _prefs.setString('summaryClosed', key(s.date));
+    notifyListeners();
+  }
+
   // ---- Water ----
   static const glassMl = 250;
 

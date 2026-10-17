@@ -20,6 +20,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   bool _female = true;
   double _activity = activities[1].factor;
   String _avatar = avatarIcons.first;
+  Goal _goal = Goal.health;
 
   @override
   void initState() {
@@ -32,6 +33,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       _weight.text = fmt(p.weightKg);
       _activity = p.activity;
       _avatar = p.avatar;
+      _goal = p.goal;
     }
   }
 
@@ -49,7 +51,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         heightCm: h,
         weightKg: w,
         activity: _activity,
-        avatar: _avatar);
+        avatar: _avatar,
+        goal: _goal);
   }
 
   @override
@@ -109,6 +112,18 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ],
           ),
           const SizedBox(height: 16),
+          Text('What are you counting for?',
+              style: PC.body(14, color: PC.textSoft)),
+          const SizedBox(height: 8),
+          SegmentedButton<Goal>(
+            segments: [
+              for (final g in Goal.values)
+                ButtonSegment(value: g, label: Text(g.label)),
+            ],
+            selected: {_goal},
+            onSelectionChanged: (v) => setState(() => _goal = v.first),
+          ),
+          const SizedBox(height: 16),
           Text('Activity', style: PC.body(14, color: PC.textSoft)),
           const SizedBox(height: 6),
           for (final a in activities)
@@ -139,7 +154,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Mifflin–St Jeor formula × activity. Water: 30 ml per kg.',
+            'Mifflin–St Jeor formula × activity; −15% to lose weight, +10% to gain. Water: 30 ml per kg.',
             textAlign: TextAlign.center,
             style: PC.body(12, color: PC.textSoft),
           ),

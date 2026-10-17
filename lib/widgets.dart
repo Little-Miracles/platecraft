@@ -507,6 +507,48 @@ class CategoryChoice extends StatelessWidget {
       );
 }
 
+/// The caring evening card: how the last logged day went, with its date.
+class SummaryCard extends StatelessWidget {
+  const SummaryCard({super.key, required this.summary});
+  final DaySummary summary;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = summary;
+    return Container(
+      decoration: PC.sheenCard(border: PC.logoGold.withOpacity(0.7)),
+      padding: const EdgeInsets.fromLTRB(16, 8, 4, 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.nightlight_outlined,
+                  color: PC.logoGold, size: 18),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text('Your day · ${dayTitle(s.date)}',
+                    style: PC.logo(16, color: PC.logoGoldLight)),
+              ),
+              IconButton(
+                tooltip: t('Close'),
+                icon: const Icon(Icons.close, size: 18, color: PC.textSoft),
+                onPressed: () => AppState.instance.closeSummary(s),
+              ),
+            ],
+          ),
+          Text('${s.eaten.round()} of ${s.target} kcal',
+              style: PC.logo(20, color: PC.craft)),
+          const SizedBox(height: 4),
+          Text(s.food, style: PC.logo(13.5, color: PC.textSoft)),
+          const SizedBox(height: 8),
+          Text(s.drink, style: PC.logo(13.5, color: PC.textSoft)),
+        ],
+      ),
+    );
+  }
+}
+
 /// Protein · fat · carbs in grams.
 class MacrosRow extends StatelessWidget {
   const MacrosRow(

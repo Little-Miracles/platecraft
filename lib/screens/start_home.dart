@@ -196,6 +196,10 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
               ],
+              if (s.summary() case final sum?) ...[
+                SummaryCard(summary: sum),
+                const SizedBox(height: 10),
+              ],
               DailyBanner(
                 onSetTarget: () => _open(context, const CalculatorScreen()),
               ),

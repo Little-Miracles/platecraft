@@ -146,6 +146,20 @@ const activities = [
   Activity('Very active — physical job or 2× a day', 1.9),
 ];
 
+/// What the person counts for. Changes the daily target and how the
+/// evening summary reads a day under or over it.
+enum Goal {
+  health('For health', 1.0),
+  lose('Lose weight', 0.85),
+  gain('Gain weight', 1.10);
+
+  const Goal(this.label, this.factor);
+  final String label;
+
+  /// Applied to the maintenance calories: −15% to lose, +10% to gain.
+  final double factor;
+}
+
 class Profile {
   Profile({
     required this.female,
@@ -154,6 +168,7 @@ class Profile {
     required this.weightKg,
     required this.activity,
     required this.avatar,
+    this.goal = Goal.health,
   });
 
   final bool female;
@@ -162,12 +177,13 @@ class Profile {
   final double weightKg;
   final double activity;
   final String avatar;
+  final Goal goal;
 
   /// Mifflin–St Jeor basal metabolic rate.
   double get bmr =>
       10 * weightKg + 6.25 * heightCm - 5 * age + (female ? -161 : 5);
 
-  int get targetKcal => (bmr * activity).round();
+  int get targetKcal => (bmr * activity * goal.factor).round();
 
   /// 30 ml of water per kg of body weight.
   int get waterMl => (weightKg * 30).round();
@@ -179,6 +195,7 @@ class Profile {
         'weightKg': weightKg,
         'activity': activity,
         'avatar': avatar,
+        'goal': goal.name,
       };
 
   factory Profile.fromJson(Map<String, dynamic> j) => Profile(
@@ -188,6 +205,7 @@ class Profile {
         weightKg: (j['weightKg'] as num).toDouble(),
         activity: (j['activity'] as num).toDouble(),
         avatar: j['avatar'] as String,
+        goal: Goal.values.byName(j['goal'] as String? ?? 'health'),
       );
 }
 
@@ -521,4 +539,56 @@ class Entry {
         carbs: _num(j['c']),
         unit: j['unit'] as String? ?? 'g',
       );
+}
+
+/// The caring card on home: how a logged day went, read by the goal.
+/// No fireworks — soft words, and water always with "ask your dietitian".
+class DaySummary {
+  DaySummary({
+    required this.date,
+    required this.eaten,
+    required this.target,
+    required this.water,
+    required this.waterGoal,
+    required this.goal,
+  });
+
+  final DateTime date;
+  final double eaten;
+  final int target;
+  final int water;
+  final int waterGoal;
+  final Goal goal;
+
+  double get ratio => eaten / target;
+  int get diff => (eaten - target).round().abs();
+
+  String get food {
+    final r = ratio;
+    switch (goal) {
+      case Goal.lose:
+        if (r < 0.6) {
+          return 'That was very little food. Losing weight is good, but please take care of yourself.';
+        }
+        if (r <= 1.0) {
+          return 'Well done — you stayed within your goal and improved your result.';
+        }
+        return 'You went $diff kcal over your goal. Tomorrow is a new day.';
+      case Goal.health:
+        if (r < 0.9) {
+          return 'You were $diff kcal short of your goal. Keep an eye on it tomorrow.';
+        }
+        if (r <= 1.1) return 'Right on your goal — well balanced.';
+        return 'You went $diff kcal over your goal. Keep an eye on it tomorrow.';
+      case Goal.gain:
+        if (r < 1.0) {
+          return 'You were $diff kcal short of your goal. Try to add a little more tomorrow.';
+        }
+        return 'Well done — you reached your goal.';
+    }
+  }
+
+  String get drink => water >= waterGoal
+      ? 'Water: $water of $waterGoal ml — well done. Is that right for you? Your dietitian knows best.'
+      : 'The calculator suggests $waterGoal ml of water a day; you had $water ml. Is that enough for you? Please check with your dietitian.';
 }
