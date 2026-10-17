@@ -95,6 +95,9 @@ class PCScaffold extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis),
                           ),
                           ...?actions,
+                          // The globe on every inner screen: the language can
+                          // be changed wherever you are.
+                          const LanguageButton(size: 22, color: PC.logoGold),
                         ],
                       ),
                     ),

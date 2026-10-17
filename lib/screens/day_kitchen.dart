@@ -51,6 +51,7 @@ class DayKitchenScreen extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
+                          const LanguageButton(size: 22, color: PC.logoGold),
                           _SavedDishesButton(
                             onTap: () => Navigator.push(
                                 context,
