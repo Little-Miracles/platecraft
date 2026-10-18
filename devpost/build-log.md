@@ -46,6 +46,23 @@ Calories come from real ingredients and real formulas, never from a guess.
 | Translation fixes: the whole week as one phrase, full shelf names, "My saved dishes" | Short words alone came back wrong ("Fr" → "О", "Main" → "Головна") | The translator needs context, like a person |
 | **Backup: save all data to a file, restore it on a new phone** | Without a server, a new phone would start empty | Your kitchen and your history move with you |
 
+## 18 October — the demo video
+
+No code today: a full check (`flutter analyze` clean, all tests pass), then the
+video. Nataliia recorded the real app, used with her real data; AI cut the
+recordings with ffmpeg; she put it together in Canva with her own music.
+
+| What we did | What we noticed | Why it matters |
+|---|---|---|
+| Recorded the real path in pieces: morning card → coffee → water → calculator → homemade borscht → portion → library → globe | The first single take ran over 2 minutes and was still at the start | Short pieces: a mistake costs one piece, not the whole take |
+| AI looked at every recording frame by frame and cut it: slow typing ×4, ingredient picking ×3.4, the result screens at normal speed | A judge needs time to read the numbers, not to watch typing | The kernel (ingredients → kcal per 100 g → portion) stays readable |
+| Cut out a search that found nothing ("pom…" — Polish for orange) | The app translates English, Ukrainian, German, French — not Polish yet | Honest demo: we show what works today |
+| Reordered the pieces so the numbers only go up: 10 → 259 → 296 kcal | Recorded out of order, the home banner jumped back | Every number on screen must agree |
+| Library recorded separately | The first recordings never opened Saved dishes — the heart of "make once, reuse forever" | Show the core, not only the setup |
+| Dishes named in Ukrainian (борщ, кава, сирник) kept on screen | First seen as a slip in an English video | It shows the point: you name your food in your own language |
+| Vertical phone recording placed on a 16:9 emerald background | Devpost and YouTube players are wide; a narrow strip looks lost | Captions sit beside the phone and never cover the app |
+| Captions: Nataliia says it in Russian, AI translates close to her words | She doesn't speak English on camera | Her words, not a marketing script |
+
 ## What comes next (not in this prototype)
 
 - **AI that fills in products from a global food library.** Type "Golden
