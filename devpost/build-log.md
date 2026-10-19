@@ -62,6 +62,7 @@ recordings with ffmpeg; she put it together in Canva with her own music.
 | Dishes named in Ukrainian (борщ, кава, сирник) kept on screen | First seen as a slip in an English video | It shows the point: you name your food in your own language |
 | Vertical phone recording placed on a 16:9 emerald background | Devpost and YouTube players are wide; a narrow strip looks lost | Captions sit beside the phone and never cover the app |
 | Captions: Nataliia says it in Russian, AI translates close to her words | She doesn't speak English on camera | Her words, not a marketing script |
+| **Background music composed by AI in code** (`tool/compose_music.py`): soft pad, piano arpeggio, bass, a slow melody in C major, 72 BPM, 3 min, fades to silence | Nataliia: "let it be one more thing we made together" — no stock tracks | Every sound in the video is ours, made the same way as the app |
 
 ## What comes next (not in this prototype)
 
