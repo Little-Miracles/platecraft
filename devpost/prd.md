@@ -89,7 +89,7 @@ Everything in `scope.md > The POC Boundary`: start, home with banner, calculator
 ## Non-Goals
 - AI, photo or voice recognition — contradicts the kernel.
 - Accounts, login, cloud sync — not needed for one person's prototype.
-- Russian text anywhere in the app — app is English.
+- Built-in text in other languages — the app is English; the globe translates on the fly.
 
 ## Open Questions
 - Final name for the food-builder button (working name "My Kitchen") — can wait, learner decides while viewing.
