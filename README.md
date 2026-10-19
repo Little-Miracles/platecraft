@@ -47,3 +47,8 @@ The screens evolved while building — every change and the reason for it is in 
 - Cooking yields: average weight-loss factors from cooking tables.
 - Fonts: Marcellus, Playfair Display, Manrope (Google Fonts, OFL).
 - Logo: generated with Google Gemini and edited for the app.
+
+## License
+
+The PlateCraft code is released under the [Apache License 2.0](LICENSE).
+Third-party assets keep their own licenses (see Credits above).
