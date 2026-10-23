@@ -4,6 +4,8 @@
 
 PlateCraft is a calorie tracker for people who cook for themselves. Instead of picking "borscht" from a generic database or letting AI guess from a photo, you build *your* dish from the real ingredients and grams you used and get the exact calories, protein, fat and carbs per 100 g of what you actually made. No scales needed: the finished weight is estimated from how you cooked it — or enter your own. Make it once, and it waits in **Saved dishes** for next time.
 
+**▶ Try it live (no install, no account):** https://little-miracles.github.io/platecraft/ — best on a phone, or in Chrome device mode.
+
 Built for Devpost **Build With AI: Basics** (October 2026), following the plan-first Devpost Learn workflow.
 
 ## What it does

@@ -41,6 +41,12 @@ class StartScreen extends StatelessWidget {
                   .body(12.5, color: PC.textSoft, weight: FontWeight.w300)
                   .copyWith(fontStyle: FontStyle.italic),
             ),
+            const SizedBox(height: 6),
+            Text(
+              'A calorie tracker for people who cook at home.',
+              textAlign: TextAlign.center,
+              style: PC.body(12.5, color: PC.textSoft, weight: FontWeight.w300),
+            ),
             const Spacer(),
             PlateButton(
               label: 'Start',

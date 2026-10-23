@@ -1,6 +1,6 @@
 ---
 doc: spec
-status: draft (updated 17.10 — two flows, estimated weight, macros; see build-log.md)
+status: final (updated 17.10 — two flows, estimated weight, macros; see build-log.md)
 ---
 
 # PlateCraft — Technical Spec

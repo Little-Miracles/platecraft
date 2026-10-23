@@ -1,6 +1,6 @@
 ---
 doc: prd
-status: draft
+status: final
 ---
 
 # PlateCraft — Product Requirements
