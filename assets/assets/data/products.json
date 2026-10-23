@@ -1,0 +1,1663 @@
+[
+ {
+  "name": "Coffee machine (espresso-based)",
+  "kcal": 9,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 0.1,
+  "f": 0.2,
+  "c": 1.7,
+  "icon": "coffee"
+ },
+ {
+  "name": "Turkish coffee (cezve)",
+  "kcal": 4,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 0.2,
+  "f": 0,
+  "c": 0.7,
+  "icon": "coffee"
+ },
+ {
+  "name": "Instant coffee (cup)",
+  "kcal": 4,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 0.2,
+  "f": 0,
+  "c": 0.8,
+  "icon": "coffee"
+ },
+ {
+  "name": "Instant coffee (powder)",
+  "kcal": 353,
+  "for": [
+   "drinks"
+  ],
+  "tsp": 2,
+  "p": 12.2,
+  "f": 0.5,
+  "c": 75.4,
+  "icon": "coffee"
+ },
+ {
+  "name": "Brewed coffee (drip, press)",
+  "kcal": 2,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 0.1,
+  "f": 0,
+  "c": 0.4,
+  "icon": "coffee"
+ },
+ {
+  "name": "Wheat flour",
+  "kcal": 364,
+  "for": [
+   "baked",
+   "mains"
+  ],
+  "tsp": 3,
+  "p": 10.3,
+  "f": 1.0,
+  "c": 76.3,
+  "icon": "bread"
+ },
+ {
+  "name": "Whole wheat flour",
+  "kcal": 340,
+  "for": [
+   "baked"
+  ],
+  "tsp": 3,
+  "p": 13.2,
+  "f": 2.5,
+  "c": 72.0,
+  "icon": "bread"
+ },
+ {
+  "name": "Butter",
+  "kcal": 717,
+  "for": [
+   "baked",
+   "soups",
+   "mains"
+  ],
+  "tsp": 5,
+  "p": 0.9,
+  "f": 81.1,
+  "c": 0.1,
+  "icon": "butter"
+ },
+ {
+  "name": "Egg",
+  "kcal": 143,
+  "for": [
+   "baked",
+   "mains",
+   "soups"
+  ],
+  "p": 12.6,
+  "f": 9.5,
+  "c": 0.7,
+  "pcs": [
+   [
+    "Small",
+    44,
+    null
+   ],
+   [
+    "Medium",
+    51,
+    null
+   ],
+   [
+    "Large",
+    60,
+    null
+   ]
+  ],
+  "icon": "egg"
+ },
+ {
+  "name": "Sugar",
+  "kcal": 387,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "tsp": 5,
+  "p": 0,
+  "f": 0,
+  "c": 100,
+  "icon": "baked"
+ },
+ {
+  "name": "Powdered sugar",
+  "kcal": 389,
+  "for": [
+   "baked"
+  ],
+  "tsp": 4,
+  "p": 0,
+  "f": 0,
+  "c": 99.8,
+  "icon": "baked"
+ },
+ {
+  "name": "Vanilla sugar",
+  "kcal": 392,
+  "for": [
+   "baked"
+  ],
+  "tsp": 4,
+  "p": 0,
+  "f": 0,
+  "c": 98,
+  "icon": "baked"
+ },
+ {
+  "name": "Brown sugar",
+  "kcal": 380,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "tsp": 5,
+  "p": 0.1,
+  "f": 0,
+  "c": 98.1,
+  "icon": "baked"
+ },
+ {
+  "name": "Dry yeast",
+  "kcal": 325,
+  "for": [
+   "baked"
+  ],
+  "tsp": 3,
+  "p": 40.4,
+  "f": 7.6,
+  "c": 14.3,
+  "icon": "baked"
+ },
+ {
+  "name": "Baking powder",
+  "kcal": 53,
+  "for": [
+   "baked"
+  ],
+  "tsp": 4,
+  "p": 0,
+  "f": 0,
+  "c": 13,
+  "icon": "baked"
+ },
+ {
+  "name": "Milk 2%",
+  "kcal": 50,
+  "for": [
+   "baked",
+   "drinks",
+   "soups"
+  ],
+  "ml": true,
+  "tsp": 5,
+  "p": 3.3,
+  "f": 2.0,
+  "c": 4.8,
+  "icon": "milk"
+ },
+ {
+  "name": "Milk 3.2%",
+  "kcal": 60,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "ml": true,
+  "tsp": 5,
+  "p": 3.2,
+  "f": 3.2,
+  "c": 4.7,
+  "icon": "milk"
+ },
+ {
+  "name": "Cream 33%",
+  "kcal": 337,
+  "for": [
+   "baked",
+   "drinks",
+   "soups"
+  ],
+  "ml": true,
+  "tsp": 5,
+  "p": 2.2,
+  "f": 33,
+  "c": 4.0,
+  "icon": "milk"
+ },
+ {
+  "name": "Sour cream 15%",
+  "kcal": 162,
+  "for": [
+   "baked",
+   "soups",
+   "mains"
+  ],
+  "tsp": 5,
+  "p": 2.6,
+  "f": 15,
+  "c": 3.6,
+  "icon": "milk"
+ },
+ {
+  "name": "Cottage cheese 0%",
+  "kcal": 99,
+  "for": [
+   "baked",
+   "mains"
+  ],
+  "p": 19.8,
+  "f": 0.5,
+  "c": 3.5,
+  "icon": "cheese"
+ },
+ {
+  "name": "Cottage cheese 5%",
+  "kcal": 121,
+  "for": [
+   "baked",
+   "mains"
+  ],
+  "p": 17.2,
+  "f": 5,
+  "c": 1.8,
+  "icon": "cheese"
+ },
+ {
+  "name": "Cottage cheese 9%",
+  "kcal": 159,
+  "for": [
+   "baked",
+   "mains"
+  ],
+  "p": 16.7,
+  "f": 9,
+  "c": 2,
+  "icon": "cheese"
+ },
+ {
+  "name": "Cream cheese",
+  "kcal": 342,
+  "for": [
+   "baked"
+  ],
+  "tsp": 5,
+  "p": 6,
+  "f": 34,
+  "c": 4,
+  "icon": "cheese"
+ },
+ {
+  "name": "Mascarpone",
+  "kcal": 429,
+  "for": [
+   "baked"
+  ],
+  "tsp": 5,
+  "p": 4.8,
+  "f": 44,
+  "c": 3.6,
+  "icon": "cheese"
+ },
+ {
+  "name": "Condensed milk",
+  "kcal": 321,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "tsp": 7,
+  "p": 7.9,
+  "f": 8.7,
+  "c": 54.4,
+  "icon": "milk"
+ },
+ {
+  "name": "Dark chocolate 70%",
+  "kcal": 598,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "p": 7.8,
+  "f": 42.6,
+  "c": 45.9,
+  "icon": "chocolate"
+ },
+ {
+  "name": "Milk chocolate",
+  "kcal": 535,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "p": 7.6,
+  "f": 29.7,
+  "c": 59.4,
+  "icon": "chocolate"
+ },
+ {
+  "name": "Cocoa powder",
+  "kcal": 228,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "tsp": 3,
+  "p": 19.6,
+  "f": 13.7,
+  "c": 21,
+  "icon": "chocolate"
+ },
+ {
+  "name": "Honey",
+  "kcal": 304,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "tsp": 7,
+  "p": 0.3,
+  "f": 0,
+  "c": 82.4,
+  "icon": "honey"
+ },
+ {
+  "name": "Jam",
+  "kcal": 250,
+  "for": [
+   "baked"
+  ],
+  "tsp": 7,
+  "p": 0.4,
+  "f": 0.1,
+  "c": 65,
+  "icon": "strawberry"
+ },
+ {
+  "name": "Raisins",
+  "kcal": 299,
+  "for": [
+   "baked"
+  ],
+  "p": 3.1,
+  "f": 0.5,
+  "c": 79.2,
+  "icon": "nuts"
+ },
+ {
+  "name": "Poppy seeds",
+  "kcal": 525,
+  "for": [
+   "baked"
+  ],
+  "tsp": 3,
+  "p": 18,
+  "f": 41.6,
+  "c": 28.1,
+  "icon": "nuts"
+ },
+ {
+  "name": "Walnuts",
+  "kcal": 654,
+  "for": [
+   "baked",
+   "mains"
+  ],
+  "p": 15.2,
+  "f": 65.2,
+  "c": 13.7,
+  "icon": "nuts"
+ },
+ {
+  "name": "Almonds",
+  "kcal": 579,
+  "for": [
+   "baked"
+  ],
+  "p": 21.2,
+  "f": 49.9,
+  "c": 21.6,
+  "icon": "nuts"
+ },
+ {
+  "name": "Hazelnuts",
+  "kcal": 628,
+  "for": [
+   "baked"
+  ],
+  "p": 15,
+  "f": 60.8,
+  "c": 16.7,
+  "icon": "nuts"
+ },
+ {
+  "name": "Coconut flakes",
+  "kcal": 660,
+  "for": [
+   "baked"
+  ],
+  "tsp": 2,
+  "p": 6.9,
+  "f": 64.5,
+  "c": 23.7,
+  "icon": "coconut"
+ },
+ {
+  "name": "Oat flakes",
+  "kcal": 379,
+  "for": [
+   "baked",
+   "mains"
+  ],
+  "tsp": 3,
+  "p": 13.2,
+  "f": 6.5,
+  "c": 67.7,
+  "icon": "rice"
+ },
+ {
+  "name": "Semolina",
+  "kcal": 360,
+  "for": [
+   "baked",
+   "mains"
+  ],
+  "p": 12.7,
+  "f": 1.1,
+  "c": 68.9,
+  "tsp": 4,
+  "icon": "rice"
+ },
+ {
+  "name": "Margarine",
+  "kcal": 717,
+  "for": [
+   "baked"
+  ],
+  "tsp": 5,
+  "p": 0.2,
+  "f": 80.5,
+  "c": 0.7,
+  "icon": "butter"
+ },
+ {
+  "name": "Sunflower oil",
+  "kcal": 884,
+  "for": [
+   "baked",
+   "soups",
+   "mains"
+  ],
+  "tsp": 5,
+  "p": 0,
+  "f": 100,
+  "c": 0,
+  "icon": "olive"
+ },
+ {
+  "name": "Starch",
+  "kcal": 381,
+  "for": [
+   "baked",
+   "soups"
+  ],
+  "tsp": 3,
+  "p": 0.3,
+  "f": 0.1,
+  "c": 91.3,
+  "icon": "baked"
+ },
+ {
+  "name": "Gelatin",
+  "kcal": 335,
+  "for": [
+   "baked"
+  ],
+  "tsp": 3,
+  "p": 85.6,
+  "f": 0.1,
+  "c": 0,
+  "icon": "baked"
+ },
+ {
+  "name": "Apple",
+  "kcal": 52,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "p": 0.3,
+  "f": 0.2,
+  "c": 13.8,
+  "pcs": [
+   [
+    "Small",
+    130,
+    "6 cm"
+   ],
+   [
+    "Medium",
+    180,
+    "7.5 cm"
+   ],
+   [
+    "Large",
+    230,
+    "8.5 cm"
+   ]
+  ],
+  "icon": "snack"
+ },
+ {
+  "name": "Banana",
+  "kcal": 89,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "p": 1.1,
+  "f": 0.3,
+  "c": 22.8,
+  "pcs": [
+   [
+    "Small",
+    90,
+    "15 cm"
+   ],
+   [
+    "Medium",
+    120,
+    "18 cm"
+   ],
+   [
+    "Large",
+    150,
+    "21 cm"
+   ]
+  ],
+  "icon": "banana"
+ },
+ {
+  "name": "Strawberries",
+  "kcal": 32,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "p": 0.7,
+  "f": 0.3,
+  "c": 7.7,
+  "pcs": [
+   [
+    "Berry",
+    12,
+    null
+   ]
+  ],
+  "icon": "strawberry"
+ },
+ {
+  "name": "Cherries",
+  "kcal": 50,
+  "for": [
+   "baked"
+  ],
+  "p": 1.0,
+  "f": 0.3,
+  "c": 12.2,
+  "icon": "cherries"
+ },
+ {
+  "name": "Blueberries",
+  "kcal": 57,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "p": 0.7,
+  "f": 0.3,
+  "c": 14.5,
+  "icon": "blueberries"
+ },
+ {
+  "name": "Lemon",
+  "kcal": 29,
+  "for": [
+   "baked",
+   "drinks"
+  ],
+  "p": 1.1,
+  "f": 0.3,
+  "c": 6.5,
+  "pcs": [
+   [
+    "Small",
+    60,
+    "5 cm"
+   ],
+   [
+    "Medium",
+    85,
+    "6 cm"
+   ],
+   [
+    "Large",
+    110,
+    "7 cm"
+   ]
+  ],
+  "icon": "lemon"
+ },
+ {
+  "name": "Water",
+  "kcal": 0,
+  "for": [
+   "drinks",
+   "soups"
+  ],
+  "ml": true,
+  "p": 0,
+  "f": 0,
+  "c": 0,
+  "icon": "water"
+ },
+ {
+  "name": "Black tea (brewed)",
+  "kcal": 1,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 0,
+  "f": 0,
+  "c": 0.3,
+  "icon": "tea"
+ },
+ {
+  "name": "Green tea (brewed)",
+  "kcal": 1,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 0.2,
+  "f": 0,
+  "c": 0,
+  "icon": "tea"
+ },
+ {
+  "name": "Oat milk",
+  "kcal": 46,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 1.0,
+  "f": 1.5,
+  "c": 6.7,
+  "icon": "milk"
+ },
+ {
+  "name": "Almond milk",
+  "kcal": 17,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 0.6,
+  "f": 1.1,
+  "c": 0.6,
+  "icon": "milk"
+ },
+ {
+  "name": "Coconut milk",
+  "kcal": 230,
+  "for": [
+   "drinks",
+   "soups"
+  ],
+  "ml": true,
+  "p": 2.3,
+  "f": 23.8,
+  "c": 5.5,
+  "icon": "coconut"
+ },
+ {
+  "name": "Syrup (vanilla, caramel)",
+  "kcal": 320,
+  "for": [
+   "drinks"
+  ],
+  "tsp": 7,
+  "p": 0,
+  "f": 0,
+  "c": 80,
+  "icon": "honey"
+ },
+ {
+  "name": "Orange juice",
+  "kcal": 45,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 0.7,
+  "f": 0.2,
+  "c": 10.4,
+  "icon": "orange"
+ },
+ {
+  "name": "Apple juice",
+  "kcal": 46,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 0.1,
+  "f": 0.1,
+  "c": 11.3,
+  "icon": "snack"
+ },
+ {
+  "name": "Kefir 2.5%",
+  "kcal": 53,
+  "for": [
+   "drinks"
+  ],
+  "ml": true,
+  "p": 3,
+  "f": 2.5,
+  "c": 4,
+  "icon": "milk"
+ },
+ {
+  "name": "Yogurt natural 2%",
+  "kcal": 60,
+  "for": [
+   "drinks",
+   "baked"
+  ],
+  "p": 4.3,
+  "f": 2,
+  "c": 6.2,
+  "icon": "milk"
+ },
+ {
+  "name": "Ice cream",
+  "kcal": 207,
+  "for": [
+   "drinks"
+  ],
+  "p": 3.5,
+  "f": 11,
+  "c": 23.6,
+  "icon": "icecream"
+ },
+ {
+  "name": "Protein powder",
+  "kcal": 380,
+  "for": [
+   "drinks"
+  ],
+  "tsp": 5,
+  "p": 75,
+  "f": 5,
+  "c": 8,
+  "icon": "milk"
+ },
+ {
+  "name": "Mint",
+  "kcal": 44,
+  "for": [
+   "drinks"
+  ],
+  "p": 3.3,
+  "f": 0.7,
+  "c": 1.6,
+  "icon": "leafy"
+ },
+ {
+  "name": "Ice",
+  "kcal": 0,
+  "for": [
+   "drinks"
+  ],
+  "p": 0,
+  "f": 0,
+  "c": 0,
+  "icon": "water"
+ },
+ {
+  "name": "Potato",
+  "kcal": 77,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 2.0,
+  "f": 0.1,
+  "c": 17.5,
+  "pcs": [
+   [
+    "Small",
+    100,
+    "5 cm"
+   ],
+   [
+    "Medium",
+    170,
+    "7 cm"
+   ],
+   [
+    "Large",
+    250,
+    "9 cm"
+   ]
+  ],
+  "icon": "potato"
+ },
+ {
+  "name": "Carrot",
+  "kcal": 41,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 0.9,
+  "f": 0.2,
+  "c": 9.6,
+  "pcs": [
+   [
+    "Small",
+    50,
+    "14 cm"
+   ],
+   [
+    "Medium",
+    70,
+    "18 cm"
+   ],
+   [
+    "Large",
+    100,
+    "22 cm"
+   ]
+  ],
+  "icon": "carrot"
+ },
+ {
+  "name": "Onion",
+  "kcal": 40,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 1.1,
+  "f": 0.1,
+  "c": 9.3,
+  "pcs": [
+   [
+    "Small",
+    70,
+    "5 cm"
+   ],
+   [
+    "Medium",
+    110,
+    "6.5 cm"
+   ],
+   [
+    "Large",
+    160,
+    "8 cm"
+   ]
+  ],
+  "icon": "onion"
+ },
+ {
+  "name": "Beetroot",
+  "kcal": 43,
+  "for": [
+   "soups"
+  ],
+  "p": 1.6,
+  "f": 0.2,
+  "c": 9.6,
+  "pcs": [
+   [
+    "Small",
+    100,
+    "5 cm"
+   ],
+   [
+    "Medium",
+    150,
+    "7 cm"
+   ],
+   [
+    "Large",
+    250,
+    "9 cm"
+   ]
+  ],
+  "icon": "beetroot"
+ },
+ {
+  "name": "Cabbage",
+  "kcal": 25,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 1.3,
+  "f": 0.1,
+  "c": 3.3,
+  "icon": "leafy"
+ },
+ {
+  "name": "Tomato",
+  "kcal": 18,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 0.9,
+  "f": 0.2,
+  "c": 3.9,
+  "pcs": [
+   [
+    "Small",
+    90,
+    "5 cm"
+   ],
+   [
+    "Medium",
+    120,
+    "6.5 cm"
+   ],
+   [
+    "Large",
+    180,
+    "8 cm"
+   ]
+  ],
+  "icon": "tomato"
+ },
+ {
+  "name": "Tomato paste",
+  "kcal": 82,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "tsp": 6,
+  "p": 4.3,
+  "f": 0.5,
+  "c": 14.8,
+  "icon": "tomato"
+ },
+ {
+  "name": "Bell pepper",
+  "kcal": 31,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 1.0,
+  "f": 0.3,
+  "c": 6.0,
+  "pcs": [
+   [
+    "Small",
+    120,
+    null
+   ],
+   [
+    "Medium",
+    160,
+    null
+   ],
+   [
+    "Large",
+    200,
+    null
+   ]
+  ],
+  "icon": "pepper"
+ },
+ {
+  "name": "Garlic",
+  "kcal": 149,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 6.4,
+  "f": 0.5,
+  "c": 33.1,
+  "pcs": [
+   [
+    "Clove",
+    5,
+    null
+   ]
+  ],
+  "icon": "garlic"
+ },
+ {
+  "name": "Celery",
+  "kcal": 16,
+  "for": [
+   "soups"
+  ],
+  "p": 0.7,
+  "f": 0.2,
+  "c": 3.0,
+  "icon": "leafy"
+ },
+ {
+  "name": "Zucchini",
+  "kcal": 17,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 1.2,
+  "f": 0.3,
+  "c": 3.1,
+  "pcs": [
+   [
+    "Small",
+    150,
+    "15 cm"
+   ],
+   [
+    "Medium",
+    200,
+    "20 cm"
+   ],
+   [
+    "Large",
+    300,
+    "25 cm"
+   ]
+  ],
+  "icon": "cucumber"
+ },
+ {
+  "name": "Mushrooms",
+  "kcal": 22,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 3.1,
+  "f": 0.3,
+  "c": 2.3,
+  "icon": "mushroom"
+ },
+ {
+  "name": "Dill / parsley",
+  "kcal": 36,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 3.0,
+  "f": 0.8,
+  "c": 3.0,
+  "icon": "leafy"
+ },
+ {
+  "name": "Bay leaf",
+  "kcal": 313,
+  "for": [
+   "soups"
+  ],
+  "p": 7.6,
+  "f": 8.4,
+  "c": 49,
+  "icon": "leafy"
+ },
+ {
+  "name": "Lentils (dry)",
+  "kcal": 352,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 24.6,
+  "f": 1.1,
+  "c": 63.4,
+  "icon": "beans"
+ },
+ {
+  "name": "Beans (canned)",
+  "kcal": 91,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 6,
+  "f": 0.4,
+  "c": 16,
+  "icon": "beans"
+ },
+ {
+  "name": "Peas (frozen)",
+  "kcal": 81,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 5.4,
+  "f": 0.4,
+  "c": 14.5,
+  "icon": "peas"
+ },
+ {
+  "name": "Noodles (dry)",
+  "kcal": 371,
+  "for": [
+   "soups"
+  ],
+  "p": 13,
+  "f": 1.5,
+  "c": 75,
+  "icon": "spaghetti"
+ },
+ {
+  "name": "Shrimp",
+  "kcal": 85,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 20.1,
+  "f": 0.5,
+  "c": 0,
+  "icon": "shrimp"
+ },
+ {
+  "name": "Salt",
+  "kcal": 0,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "tsp": 6,
+  "p": 0,
+  "f": 0,
+  "c": 0,
+  "icon": "salt"
+ },
+ {
+  "name": "Chicken breast",
+  "kcal": 120,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 22.5,
+  "f": 2.6,
+  "c": 0,
+  "pcs": [
+   [
+    "Small",
+    150,
+    null
+   ],
+   [
+    "Medium",
+    200,
+    null
+   ],
+   [
+    "Large",
+    250,
+    null
+   ]
+  ],
+  "icon": "chicken"
+ },
+ {
+  "name": "Chicken thigh",
+  "kcal": 177,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 18,
+  "f": 11,
+  "c": 0,
+  "icon": "chicken"
+ },
+ {
+  "name": "Whole chicken",
+  "kcal": 215,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 18.6,
+  "f": 15.1,
+  "c": 0,
+  "icon": "chicken"
+ },
+ {
+  "name": "Beef",
+  "kcal": 250,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 18,
+  "f": 19.5,
+  "c": 0,
+  "icon": "meat"
+ },
+ {
+  "name": "Pork",
+  "kcal": 242,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 16,
+  "f": 20,
+  "c": 0,
+  "icon": "meat"
+ },
+ {
+  "name": "Veal",
+  "kcal": 172,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 19.4,
+  "f": 10,
+  "c": 0,
+  "icon": "meat"
+ },
+ {
+  "name": "Minced meat (pork+beef)",
+  "kcal": 263,
+  "for": [
+   "mains"
+  ],
+  "p": 17,
+  "f": 21.5,
+  "c": 0,
+  "icon": "meat"
+ },
+ {
+  "name": "Turkey",
+  "kcal": 135,
+  "for": [
+   "mains"
+  ],
+  "p": 19.5,
+  "f": 6,
+  "c": 0,
+  "icon": "chicken"
+ },
+ {
+  "name": "Salmon",
+  "kcal": 208,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 20.4,
+  "f": 13.4,
+  "c": 0,
+  "icon": "fish"
+ },
+ {
+  "name": "Cod",
+  "kcal": 82,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 17.8,
+  "f": 0.7,
+  "c": 0,
+  "icon": "fish"
+ },
+ {
+  "name": "Rice (dry)",
+  "kcal": 360,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 6.7,
+  "f": 0.6,
+  "c": 79.3,
+  "icon": "rice"
+ },
+ {
+  "name": "Buckwheat (dry)",
+  "kcal": 343,
+  "for": [
+   "mains"
+  ],
+  "p": 13.3,
+  "f": 3.4,
+  "c": 71.5,
+  "icon": "rice"
+ },
+ {
+  "name": "Pasta (dry)",
+  "kcal": 371,
+  "for": [
+   "mains"
+  ],
+  "p": 13,
+  "f": 1.5,
+  "c": 74.7,
+  "icon": "spaghetti"
+ },
+ {
+  "name": "Bulgur (dry)",
+  "kcal": 342,
+  "for": [
+   "mains"
+  ],
+  "p": 12.3,
+  "f": 1.3,
+  "c": 75.9,
+  "icon": "rice"
+ },
+ {
+  "name": "Hard cheese",
+  "kcal": 402,
+  "for": [
+   "mains",
+   "baked"
+  ],
+  "p": 25,
+  "f": 33,
+  "c": 1.3,
+  "icon": "cheese"
+ },
+ {
+  "name": "Mozzarella",
+  "kcal": 280,
+  "for": [
+   "mains"
+  ],
+  "p": 22,
+  "f": 21,
+  "c": 2.2,
+  "icon": "cheese"
+ },
+ {
+  "name": "Olive oil",
+  "kcal": 884,
+  "for": [
+   "mains"
+  ],
+  "tsp": 5,
+  "p": 0,
+  "f": 100,
+  "c": 0,
+  "icon": "olive"
+ },
+ {
+  "name": "Cucumber",
+  "kcal": 15,
+  "for": [
+   "mains"
+  ],
+  "p": 0.7,
+  "f": 0.1,
+  "c": 3.6,
+  "pcs": [
+   [
+    "Small",
+    100,
+    "15 cm"
+   ],
+   [
+    "Medium",
+    150,
+    "20 cm"
+   ],
+   [
+    "Large",
+    200,
+    "25 cm"
+   ]
+  ],
+  "icon": "cucumber"
+ },
+ {
+  "name": "Avocado",
+  "kcal": 160,
+  "for": [
+   "mains"
+  ],
+  "p": 2,
+  "f": 14.7,
+  "c": 8.5,
+  "pcs": [
+   [
+    "Small",
+    100,
+    null
+   ],
+   [
+    "Medium",
+    140,
+    null
+   ],
+   [
+    "Large",
+    180,
+    null
+   ]
+  ],
+  "icon": "avocado"
+ },
+ {
+  "name": "Broccoli",
+  "kcal": 34,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 2.8,
+  "f": 0.4,
+  "c": 4.0,
+  "icon": "broccoli"
+ },
+ {
+  "name": "Spinach",
+  "kcal": 23,
+  "for": [
+   "mains",
+   "soups"
+  ],
+  "p": 2.9,
+  "f": 0.4,
+  "c": 1.4,
+  "icon": "leafy"
+ },
+ {
+  "name": "Bread",
+  "kcal": 265,
+  "for": [
+   "mains"
+  ],
+  "p": 9,
+  "f": 3.2,
+  "c": 49,
+  "pcs": [
+   [
+    "Slice",
+    30,
+    null
+   ]
+  ],
+  "icon": "bread"
+ },
+ {
+  "name": "Quail egg",
+  "kcal": 158,
+  "for": [
+   "soups",
+   "mains"
+  ],
+  "p": 13,
+  "f": 11,
+  "c": 0.4,
+  "pcs": [
+   [
+    "Egg",
+    10,
+    null
+   ]
+  ],
+  "icon": "egg"
+ },
+ {
+  "name": "Orange",
+  "kcal": 47,
+  "for": [
+   "drinks",
+   "baked"
+  ],
+  "p": 0.9,
+  "f": 0.1,
+  "c": 9.4,
+  "pcs": [
+   [
+    "Small",
+    100,
+    "6 cm"
+   ],
+   [
+    "Medium",
+    140,
+    "7.5 cm"
+   ],
+   [
+    "Large",
+    190,
+    "8.5 cm"
+   ]
+  ],
+  "icon": "orange"
+ },
+ {
+  "name": "Peach",
+  "kcal": 39,
+  "for": [
+   "drinks",
+   "baked"
+  ],
+  "p": 0.9,
+  "f": 0.3,
+  "c": 8.0,
+  "pcs": [
+   [
+    "Small",
+    110,
+    "6 cm"
+   ],
+   [
+    "Medium",
+    150,
+    "7 cm"
+   ],
+   [
+    "Large",
+    200,
+    "8 cm"
+   ]
+  ],
+  "icon": "peach"
+ },
+ {
+  "name": "Pear",
+  "kcal": 57,
+  "for": [
+   "drinks",
+   "baked"
+  ],
+  "p": 0.4,
+  "f": 0.1,
+  "c": 12.1,
+  "pcs": [
+   [
+    "Small",
+    130,
+    null
+   ],
+   [
+    "Medium",
+    180,
+    null
+   ],
+   [
+    "Large",
+    230,
+    null
+   ]
+  ],
+  "icon": "pear"
+ },
+ {
+  "name": "Kiwi",
+  "kcal": 61,
+  "for": [
+   "drinks"
+  ],
+  "p": 1.1,
+  "f": 0.5,
+  "c": 11.7,
+  "pcs": [
+   [
+    "Small",
+    60,
+    null
+   ],
+   [
+    "Medium",
+    75,
+    null
+   ],
+   [
+    "Large",
+    90,
+    null
+   ]
+  ],
+  "icon": "kiwi"
+ }
+]
